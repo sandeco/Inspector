@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Inspector</string>
+    <string name="title_lista_palestras">Atividades de Hoje</string>
+    <string name="title_activity_verificar_presenca">Validação de Inscrições</string>
+    <string name="msg_default_status">Posicione o QR Code dentro do retângulo para a leitura</string>
+    <string name="action_part_list">Lista Part.</string>
+    <string name="label_inscricao">Inscrição</string>
+    <string name="label_nome">Nome:</string>
+    <string name="hint_et_inscricao">Nº Inscrição</string>
+    <string name="description_bt_validar">Confirmar Presença</string>
+    <string name="description_bt_qr">QR Code</string>
+    <string name="description_bt_pesquisa">Buscar Inscrito</string>
+    <string name="description_bt_voltar">Voltar</string>
+    <string name="title_activity_activity_participacao_list">Lista de Participações</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_teste">Teste</string>
+    <string name="title_activity_activity_importar_dados">ActivityImportarDados</string>
+    <string name="title_activity_importar_dados">Importar Dados</string>
+    <string name="action_settings">Settings</string>
+    <string name="label_link">Link:</string>
+    <string name="bt_importar_dados">Importar</string>
+    <string name="bt_lista_palestras">Lista de Palestras</string>
+    <string name="bt_importar_dados_activity">Importar Dados</string>
+    <string name="bt_exportar_dados_activity">Exportar Dados</string>
+    <string name="title_activity_teste_http_client">TesteHttpClient</string>
+    <string name="title_activity_teste_http_client_get">TesteHttpClientGet</string>
+    <string name="title_activity_exportar_dados">Exportar Dados</string>
+    <string name="textOutput">Out</string>
+    <string name="internet_erro">Sua internet está sem conexão ou desabilitada</string>
+    <string name="aguarde_importacao">Por favor aguarde...</string>
+    <string name="title_activity_lista_participantes">Participantes Cadastrados</string>
+    <string name="title_activity_lista_ministracao_por_participante">Atividades desse Inscrito</string>
+    <string name="title_activity_selecionar_participante">Selecionar Participante</string>
+    <string name="backup_exportado">Backup exportado para </string>
+    <string name="json_exportado"> Json Exportado : </string>
+    <string name="dados_exportados">Dados exportados com sucesso!</string>
+    <string name="erro_jsonExportacao">Ocorreu um erro ao gerar o json para exportação</string>
+    <string name="importando_dados">Importando dados de </string>
+    <string name="importacao_sucesso">Os dados foram importados com sucesso!</string>
+    <string name="gravando_bd">Gravando no banco de dados local... essa operação pode levar alguns minutos</string>
+    <string name="dados_naoImportados">Oops! Os dados não foram importados.</string>
+    <string name="dados_importadosEgravados">Dados importados e gravados com sucesso!</string>
+    <string name="dados_naoGravados">Oops! Os dados não foram gravados</string>
+    <string name="inscricao_naoEcontrada">Inscrição não encontrada</string>
+    <string name="inscricao_invalida">Digite uma inscrição válida</string>
+    <string name="presenca_registrada">Presença registrada com sucesso</string>
+    <string name="erro_presenca">Oops! Ocorreu um erro na gravação da presença</string>
+    <string name="dialogo_titulo">Aviso!</string>
+    <string name="dialogo_ok">Ok</string>
+    <string name="dialogo_confirmacao">Confirmação</string>
+    <string name="dialogo_mensagem">O aluno está presente?</string>
+    <string name="dialogo_confirmar">Confirmar</string>
+    <string name="dialogo_cancelar">Cancelar</string>
+    <string name="title_activity_lista_presencas_exportadas">Presenças Exportadas</string>
+    <string name="bt_lista_presencas">Lista de Presenças Exportadas</string>
+    <string name="title_activity_splash">Splash</string>
+
+</resources>

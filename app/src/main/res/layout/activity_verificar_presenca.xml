@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#E6E7E8">
+    
+        <LinearLayout 
+        android:gravity="center"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:src="@drawable/logo_ifg" 
+            android:contentDescription="@string/app_name"
+            
+            />
+
+    	<ImageView
+        	android:id="@+id/imageView1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:src="@drawable/inspector_logo" 
+        	android:layout_marginLeft="25dp"
+        	android:layout_marginTop="6dp"        	
+        	android:contentDescription="@string/app_name"     
+        	/>
+        
+    </LinearLayout>
+        <LinearLayout 
+        android:layout_marginTop="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#00AFEF"
+        >
+        <ImageView
+        	android:id="@+id/linha"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:src="@drawable/line_ciano"
+        	android:contentDescription="@string/app_name"         	
+        />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:background="#606062"
+        android:layout_marginTop="2dp">
+        
+        <TextView
+            android:id="@+id/tvPalestra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:padding="10dp"
+            android:textColor="#FFFFFF"
+             />
+               
+    </LinearLayout>        
+        
+        
+    <LinearLayout 
+        android:background="#A9ABAE"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2dp"
+        >
+
+        
+ 
+        <ImageButton
+            android:id="@+id/bt_list_participantes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bt_list" 
+            android:background="#A9ABAE"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="verParticipacoes"
+            />
+        
+        
+        
+        <EditText
+            android:id="@+id/et_inscricao"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number" 
+            android:background="#FFFFFF"            
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <requestFocus />
+        </EditText>
+        
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bt_qrcode" 
+            android:background="#A9ABAE"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="qr"
+            />
+
+        <ImageButton
+            android:id="@+id/buscarInscrito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:src="@drawable/bt_search" 
+            android:background="#A9ABAE"
+            android:layout_marginRight="10dp"
+            android:onClick="buscarInscrito"
+            android:contentDescription="@string/app_name"
+            />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fundoBusca"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:layout_width="fill_parent"
+        android:background="#D2D3D5" 
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/tv_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="carambaaa"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="10dp"/>
+        
+        
+        
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center|right"
+        android:layout_marginTop="20dp"
+        >
+               
+		<!-- 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmar_presenca" 
+            android:layout_marginRight="10dp"/>
+             -->
+        
+        <ImageButton
+            android:id="@+id/btValidar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bt_confirmar" 
+            android:background="#E6E7E8"
+            android:layout_marginRight="20dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="validarPresenca"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

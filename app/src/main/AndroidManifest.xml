@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.inspector" >
+
+    <!-- Permissões necessário para ler QR Codes -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.ListaPalestrasActivity"
+            android:label="@string/title_lista_palestras"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.inspector.activity.MainActivity" />
+            >
+        </activity>
+        <activity
+            android:name=".activity.VerificarPresencaActivity"
+            android:label="@string/title_activity_verificar_presenca"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- O Zxing precisa dessa Activity para a leitura do QR Code -->
+        <activity
+            android:name="jim.h.common.android.zxinglib.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name=".activity.ParticipacaoListActivity"
+            android:label="@string/title_activity_activity_participacao_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ImportarDadosActivity"
+            android:label="@string/title_activity_importar_dados"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.inspector.activity.MainActivity" />
+            >
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ExportarDadosActivity"
+            android:label="@string/title_activity_exportar_dados"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.inspector.activity.MainActivity" />
+            >
+        </activity>
+        <activity
+            android:name=".activity.ListaParticipantesActivity"
+            android:label="@string/title_activity_lista_participantes"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ListaMinistracaoPorParticipanteActivity"
+            android:label="@string/title_activity_lista_ministracao_por_participante"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.SelecionarParticipanteActivity"
+            android:label="@string/title_activity_selecionar_participante"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.inspector.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ListaPresencasExportadasActivity"
+            android:label="@string/title_activity_lista_presencas_exportadas" >
+        </activity>
+        <activity
+            android:name=".activity.Splash"
+            android:label="@string/title_activity_splash" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
