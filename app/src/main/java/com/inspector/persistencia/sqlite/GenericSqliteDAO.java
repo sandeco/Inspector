@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.inspector.dao.DatabaseHelper;
 import com.inspector.persistencia.dao.GenericDAO;
+import com.inspector.util.App;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -20,6 +21,7 @@ public abstract class GenericSqliteDAO<T, ID extends Serializable>  implements G
 
     public GenericSqliteDAO() {
         this.classePersistente = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.helper = new DatabaseHelper(App.getContext());
     }
 
     public DatabaseHelper getHelper() {
@@ -46,5 +48,10 @@ public abstract class GenericSqliteDAO<T, ID extends Serializable>  implements G
 
     public void setDb(SQLiteDatabase db) {
         this.db = db;
+    }
+
+    public void close() {
+        helper.close();
+        helper = null;
     }
 }

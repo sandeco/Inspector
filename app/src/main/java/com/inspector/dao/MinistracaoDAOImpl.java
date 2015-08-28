@@ -4,11 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import com.inspector.model.M;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Palestra;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,18 +48,35 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 
 		Log.d("MinistracaoDAOImpl", "Data de hoje para busca no banco: "+dataHoje);
 
-		Cursor cursor = getDb().rawQuery("SELECT ministracao._id, ministracao.palestra_id, palestra.nome FROM ministracao, palestra " + 
-				"WHERE palestra._id = ministracao.palestra_id AND ministracao.data = ? ORDER BY palestra.nome ASC", new String[]{dataHoje});
+//		Cursor cursor = getDb().rawQuery("SELECT * FROM "+M.Ministracao.ENTITY_NAME+", "+M.Palestra.ENTITY_NAME+" WHERE " +
+//				M.Palestra.ID+" = "+M.Ministracao.PALESTRA_ID+" AND "+M.Ministracao.DIA_HORA+" = ? ORDER BY "+M.Palestra.NOME+" ASC",
+//				new String[]{dataHoje});
+
+//		Cursor cursor = getDb().rawQuery("SELECT ministracao._id, ministracao.palestra_id, palestra.nome FROM ministracao, palestra " +
+//				"WHERE palestra._id = ministracao.palestra_id AND ministracao.data = ? ORDER BY palestra.nome ASC", new String[]{dataHoje});
+
+		//Utilizando SQLiteQueryBuilder para construir consultas complexas programaticamente
+
+		SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+		builder.setTables(M.Ministracao.ENTITY_NAME + ", " + M.Palestra.ENTITY_NAME);
+		builder.appendWhere(M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID);
+
+		Cursor cursor = builder.query(getDb(), null, M.Ministracao.DIA_HORA + " >= ?", new String[]{dataHoje},
+				null, null, M.Palestra.NOME+" ASC");
+
+		//SELECT * FROM ministracao, palestra WHERE (palestra._id = palestra_id) AND (dia_hora LIKE '2015-08-28') ORDER BY nome ASC
 
 		List<Ministracao> ministracoes = new ArrayList<Ministracao>();
 
 		while (cursor.moveToNext()) {
 			Palestra p = new Palestra();
-			p.setId(cursor.getInt(cursor.getColumnIndex("palestra_id")));
-			p.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+			p.setId(cursor.getInt(cursor.getColumnIndex(M.Palestra.ID)));
+			p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
 			
 			Ministracao m = new Ministracao();
-			m.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+			m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
+			m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
 			m.setPalestra(p);
 			ministracoes.add(m);
 		}

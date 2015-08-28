@@ -11,9 +11,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.inspector.R;
-import com.inspector.dao.MinistracaoDAOImpl;
 import com.inspector.model.Ministracao;
+import com.inspector.persistencia.sqlite.MinistracaoSqliteDAO;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,22 +23,22 @@ public class ListaPalestrasActivity extends ListActivity {
 
 
 	public static final String EXTRA_MINISTRACAO = "ministracao_object";
-	private MinistracaoDAOImpl mDAO;
+	private MinistracaoSqliteDAO dao;
 	private List<Ministracao> ministracoesHoje;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mDAO = new MinistracaoDAOImpl(this);
-		ministracoesHoje = mDAO.listarMinistracoesDeHoje();
+		dao = new MinistracaoSqliteDAO();
+		ministracoesHoje = dao.listByDate(Timestamp.valueOf("2015-08-28 08:00:00"));
 
-		ArrayList<HashMap<String, String>> itens = new ArrayList<HashMap<String, String>>();
+		ArrayList<HashMap<String, String>> itens = new ArrayList<>();
 		for (Ministracao m : ministracoesHoje) {
-			HashMap<String, String> item = new HashMap<String, String>();
+			HashMap<String, String> item = new HashMap<>();
 			
 			item.put("nome", m.getPalestra().getNome());
-			item.put("data", DateFormat.format("dd/MM/yyyy", m.getDiaHora()).toString());
+			item.put("data", DateFormat.format("dd/MM/yyyy", m.getDiaHora().getTime()).toString());
 
 			itens.add(item);
 		}
@@ -54,7 +55,7 @@ public class ListaPalestrasActivity extends ListActivity {
 	
 	@Override
 	protected void onDestroy() {
-		mDAO.close();
+		dao.close();
 		super.onDestroy();
 	}
 	
