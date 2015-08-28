@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface MinistracaoDAO extends GenericDAO<Ministracao, Integer> {
 
-    List<Ministracao> listByDate(Timestamp date);
+    List<Ministracao> listByDate(Timestamp dateMin, Timestamp dateMax);
 
 }

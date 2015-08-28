@@ -42,8 +42,12 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     }
 
+    /**
+     * Retorna uma lista de Ministra&ccedil;&otilde;es que est&atilde;o situadas dentro do
+     * intervalo de tempo formado pelos {@code Timestamp}s passados.
+     */
     @Override
-    public List<Ministracao> listByDate(Timestamp date) {
+    public List<Ministracao> listByDate(Timestamp dateMin, Timestamp dateMax) {
 
         //Utilizando SQLiteQueryBuilder para construir consultas complexas programaticamente
 
@@ -55,10 +59,10 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
         //WHERE palestra._id = ministracao.palestra_id
         builder.appendWhere(M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID);
 
-        Cursor cursor = builder.query(getDbReadable(), null, M.Ministracao.DIA_HORA + " >= ?", new String[]{date.toString()},
+        Cursor cursor = builder.query(getDbReadable(), null,
+                "datetime("+M.Ministracao.DIA_HORA+")"+" BETWEEN datetime(?) AND datetime(?)",
+                new String[]{dateMin.toString(), dateMax.toString()},
                 null, null, M.Palestra.NOME+" ASC");
-
-        //SELECT * FROM ministracao, palestra WHERE (palestra._id = palestra_id) AND (dia_hora >= '2015-08-28 08:00:00') ORDER BY nome ASC
 
         List<Ministracao> ministracoes = new ArrayList<>();
 
