@@ -19,7 +19,32 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     @Override
     public List<Ministracao> listAll() {
-        return null;
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        //selecionando tabelas palestra e ministracao
+        builder.setTables(M.Ministracao.ENTITY_NAME + ", " + M.Palestra.ENTITY_NAME);
+
+        Cursor cursor = builder.query(getDbReadable(), null,
+                M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID,
+                null, null, null, M.Palestra.NOME+" ASC");
+
+        List<Ministracao> ministracoes = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            Palestra p = new Palestra();
+            p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
+            p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
+
+            Ministracao m = new Ministracao();
+            m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
+            m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
+            m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
+            m.setPalestra(p);
+
+            ministracoes.add(m);
+        }
+
+        return ministracoes;
     }
 
     @Override
