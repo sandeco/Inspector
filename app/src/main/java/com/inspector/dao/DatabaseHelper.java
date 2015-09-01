@@ -18,7 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
-
 		db.execSQL(M.Evento.CREATE);
 		db.execSQL(M.Inscricao.CREATE);
 		db.execSQL(M.Ministracao.CREATE);
@@ -26,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(M.Palestrante.CREATE);
 		db.execSQL(M.Participacao.CREATE);
 		db.execSQL(M.Participante.CREATE);
+		db.execSQL(M.Comunicacao.CREATE);
 
 	}
 

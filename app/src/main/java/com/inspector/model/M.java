@@ -174,5 +174,24 @@ public class M {
 
     }
 
+    /***********************************************************************************************
+     * MODELO PARTICIPANTE
+     */
+
+    public static class Comunicacao{
+
+        public static String ENTITY_NAME = "comunicacao";
+        public static String LAST_UPDATE = "last_update";
+        public static String TOKEN = "token";
+
+        public static String CREATE = "CREATE TABLE " + ENTITY_NAME + " (" +
+
+                LAST_UPDATE  + " TEXT, " +
+                TOKEN        + " TEXT)";
+
+        public static String FIELDS[] = {LAST_UPDATE, TOKEN};
+
+    }
+
 
 }
