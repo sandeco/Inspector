@@ -2,7 +2,6 @@ package com.inspector.persistencia.sqlite;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.inspector.dao.DatabaseHelper;
 import com.inspector.persistencia.dao.GenericDAO;
 import com.inspector.util.App;
 

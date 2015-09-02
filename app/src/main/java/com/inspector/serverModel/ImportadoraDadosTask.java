@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.inspector.activity.ImportarDadosActivity;
-import com.inspector.dao.DatabaseHelper;
+import com.inspector.persistencia.sqlite.DatabaseHelper;
 import com.inspector.dao.ParticipacaoDAOImpl;
 
 import java.io.File;

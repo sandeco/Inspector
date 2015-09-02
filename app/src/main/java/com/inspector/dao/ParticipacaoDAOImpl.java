@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
 import com.inspector.model.Participante;
+import com.inspector.persistencia.sqlite.DatabaseHelper;
 import com.inspector.serverModel.Presenca;
 
 import java.util.ArrayList;

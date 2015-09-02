@@ -10,6 +10,7 @@ import android.util.Log;
 import com.inspector.model.M;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Palestra;
+import com.inspector.persistencia.sqlite.DatabaseHelper;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

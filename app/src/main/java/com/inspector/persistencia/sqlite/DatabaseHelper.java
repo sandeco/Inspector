@@ -1,4 +1,4 @@
-package com.inspector.dao;
+package com.inspector.persistencia.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
