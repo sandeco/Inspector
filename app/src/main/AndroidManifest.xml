@@ -119,6 +119,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.inspector.activity.MainActivity" />
         </activity>
+
+        <service
+            android:name=".ImportDataService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver
+            android:name=".ImportDataReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="ANDROID.INTENT.ACTION.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
