@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".util.App"
@@ -121,17 +122,17 @@
         </activity>
 
         <service
-            android:name=".ImportDataService"
+            android:name=".newimport.ImportDataService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
         <receiver
-            android:name=".ImportDataReceiver"
+            android:name=".newimport.ImportDataReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
-                <action android:name="ANDROID.INTENT.ACTION.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>
