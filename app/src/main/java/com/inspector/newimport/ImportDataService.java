@@ -5,20 +5,22 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class ImportDataService extends Service implements ImportDataTask.Listener {
 
     private static final String TAG = "ImportDataService";
 
-    private ImportDataTask importDataTask;
-
-    public ImportDataService() {
-    }
+    private ImportDataTask mImportDataTask;
+    private ScheduledThreadPoolExecutor mThreadPool;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        importDataTask = new ImportDataTask(this);
+        mImportDataTask = new ImportDataTask(this);
+        mThreadPool = new ScheduledThreadPoolExecutor(1);
     }
 
     @Override
@@ -26,8 +28,10 @@ public class ImportDataService extends Service implements ImportDataTask.Listene
 
         Log.i(TAG, "Started " + intent.toString());
 
-        //executar a sincronização a cada 20 segundos
-        importDataTask.syncEachSeconds(20);
+        final int seconds = 20;
+
+        //configurando para a tarefa de importação ser executada a cada 20 segundos
+        mThreadPool.scheduleAtFixedRate(mImportDataTask, 0, seconds, TimeUnit.SECONDS);
 
         return START_REDELIVER_INTENT;
     }
@@ -43,16 +47,12 @@ public class ImportDataService extends Service implements ImportDataTask.Listene
 
     @Override
     public IBinder onBind(Intent intent) {
-        //nao iremos permitir bindService,
-        //entao retornamos null
         return null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        importDataTask.stopSync();
 
         Log.i(TAG, "Sendo destruído (onDestroy)");
     }
