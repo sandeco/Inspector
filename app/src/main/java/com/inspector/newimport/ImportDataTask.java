@@ -1,14 +1,13 @@
 package com.inspector.newimport;
 
-import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.inspector.R;
 import com.inspector.httpClient.InternetCheck;
 import com.inspector.modelcom.EventoCom;
+import com.inspector.newimport.request.EventoRequest;
+import com.inspector.persistencia.dao.EventoDAO;
 import com.inspector.util.App;
 
 import java.util.List;
@@ -23,15 +22,10 @@ public class ImportDataTask implements Runnable {
 
     private RequestQueue mQueue;
     private Listener mListener;
-    private String mBaseUrl;
 
     public ImportDataTask(Listener listener) {
         mListener = listener;
         mQueue = Volley.newRequestQueue(App.getContext());
-
-        mBaseUrl = App.getPreferences().getString(
-                App.getContext().getString(R.string.pref_url_key),
-                App.getContext().getString(R.string.pref_url_default));
     }
 
     @Override
@@ -48,17 +42,18 @@ public class ImportDataTask implements Runnable {
             mListener.update(false); //não tem internet
         else {
 
-            EventoRequest eventoRequest = new EventoRequest(mBaseUrl + "evento/",
+            EventoRequest eventoRequest = new EventoRequest(
                     new Response.Listener<List<EventoCom>>() {
                         @Override
                         public void onResponse(List<EventoCom> response) {
-                            Toast.makeText(App.getContext(), response.size(), Toast.LENGTH_SHORT).show();
+                            mListener.update(true);
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(App.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+                            error.printStackTrace();
+                            mListener.update(false);
                         }
                     });
 

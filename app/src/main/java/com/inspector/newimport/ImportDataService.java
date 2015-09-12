@@ -26,14 +26,14 @@ public class ImportDataService extends Service implements ImportDataTask.Listene
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i(TAG, "Started " + intent.toString());
+        Log.i(TAG, "Service started!");
 
         final int seconds = 20;
 
         //configurando para a tarefa de importação ser executada a cada 20 segundos
         mThreadPool.scheduleAtFixedRate(mImportDataTask, 0, seconds, TimeUnit.SECONDS);
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     @Override
