@@ -5,9 +5,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.inspector.httpClient.InternetCheck;
+import com.inspector.model.Evento;
 import com.inspector.modelcom.EventoCom;
 import com.inspector.newimport.request.EventoRequest;
 import com.inspector.persistencia.dao.EventoDAO;
+import com.inspector.persistencia.sqlite.EventoSqliteDAO;
 import com.inspector.util.App;
 
 import java.util.List;
@@ -22,10 +24,13 @@ public class ImportDataTask implements Runnable {
 
     private RequestQueue mQueue;
     private Listener mListener;
+    private EventoDAO mEventoDAO;
 
     public ImportDataTask(Listener listener) {
         mListener = listener;
         mQueue = Volley.newRequestQueue(App.getContext());
+
+        mEventoDAO = new EventoSqliteDAO();
     }
 
     @Override
@@ -46,6 +51,10 @@ public class ImportDataTask implements Runnable {
                     new Response.Listener<List<EventoCom>>() {
                         @Override
                         public void onResponse(List<EventoCom> response) {
+
+                            for (Evento evento : response)
+                                mEventoDAO.create(evento);
+
                             mListener.update(true);
                         }
                     },

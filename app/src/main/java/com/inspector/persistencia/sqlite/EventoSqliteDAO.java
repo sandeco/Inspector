@@ -1,5 +1,6 @@
 package com.inspector.persistencia.sqlite;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.inspector.model.Evento;
@@ -42,7 +43,21 @@ public class EventoSqliteDAO extends GenericSqliteDAO<Evento, Integer> implement
 
     @Override
     public Evento create(Evento entity) {
-        return null;
+
+        ContentValues values = new ContentValues();
+
+        values.put(M.Evento.ID, entity.getId());
+        values.put(M.Evento.NOME, entity.getNome());
+        values.put(M.Evento.DATA_INICIO, entity.getDataInicio().toString());
+        values.put(M.Evento.DATA_FIM, entity.getDataFim().toString());
+        values.put(M.Evento.DATA_ALTERACAO, entity.getDataAlteracao().toString());
+
+        long retorno = getDbWriteble().insert(M.Evento.ENTITY_NAME, null, values);
+
+        if (retorno != -1)
+            return entity;
+        else
+            return null;
     }
 
     @Override
