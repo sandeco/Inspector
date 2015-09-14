@@ -1,5 +1,6 @@
 package com.inspector.persistencia.sqlite;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 
@@ -12,9 +13,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by leandro on 28/08/15.
- */
 public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer> implements MinistracaoDAO {
 
     @Override
@@ -54,7 +52,21 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     @Override
     public Ministracao create(Ministracao entity) {
-        return null;
+
+        ContentValues values = new ContentValues();
+
+        values.put(M.Ministracao.ID, entity.getId());
+        values.put(M.Ministracao.PALESTRA_ID, entity.getPalestra().getId());
+        values.put(M.Ministracao.DATA_ALTERACAO, entity.getDataAlteracao().toString());
+        values.put(M.Ministracao.DIA_HORA, entity.getDiaHora().toString());
+        values.put(M.Ministracao.LOCAL, entity.getLocal());
+
+        long retorno = getDbWriteble().insert(M.Ministracao.ENTITY_NAME, null, values);
+
+        if (retorno != -1)
+            return entity;
+        else
+            return null;
     }
 
     @Override
