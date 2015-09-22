@@ -31,8 +31,8 @@ public class ListaPalestrasActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		dao = new MinistracaoSqliteDAO();
-		ministracoesHoje = dao.listByDate(Timestamp.valueOf("2015-08-28 08:00:00"),
-				Timestamp.valueOf("2015-09-29 00:00:00"));
+		ministracoesHoje = dao.listByDate(Timestamp.valueOf("2015-08-01 08:00:00"),
+				Timestamp.valueOf("2015-12-31 00:00:00"));
 
 		ArrayList<HashMap<String, String>> itens = new ArrayList<>();
 		for (Ministracao m : ministracoesHoje) {

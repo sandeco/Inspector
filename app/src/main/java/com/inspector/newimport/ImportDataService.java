@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.inspector.R;
+import com.inspector.model.Comunicacao;
 import com.inspector.modelcom.EventoCom;
 import com.inspector.modelcom.InscricaoCom;
 import com.inspector.modelcom.MinistracaoCom;
@@ -14,9 +15,12 @@ import com.inspector.modelcom.PalestraCom;
 import com.inspector.modelcom.PalestranteCom;
 import com.inspector.modelcom.ParticipanteCom;
 import com.inspector.newimport.request.ObjectRequest;
+import com.inspector.persistencia.ComunicacaoSPDao;
+import com.inspector.persistencia.dao.ComunicacaoDAO;
 import com.inspector.util.App;
 import com.inspector.util.Notifier;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -30,6 +34,7 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
     private ProxyRest proxyRest;
     private ScheduledExecutorService schedule;
     private SyncTask syncTask;
+    private ComunicacaoDAO comunicacaoDAO;
 
     @Override
     public void onCreate() {
@@ -38,6 +43,8 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
         proxyRest = new ProxyRest(this);
         schedule = new ScheduledThreadPoolExecutor(1);
         syncTask = new SyncTask();
+
+        comunicacaoDAO = new ComunicacaoSPDao();
     }
 
     @Override
@@ -63,25 +70,27 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
                     getString(R.string.pref_url_key),
                     getString(R.string.pref_url_default));
 
+            Comunicacao comunicacao = comunicacaoDAO.get();
+
             //criando os ObjectRequests que são representações de uma requisição
             //e são usados para armazenar o resultado delas
             ObjectRequest<EventoCom> eventoRequest = new ObjectRequest<>(
-                    EventoCom.class, Request.Method.GET, BASEURL+"evento", null);
+                    EventoCom.class, Request.Method.GET, getUrl(BASEURL, "evento", comunicacao.getLast_update()), null);
 
             ObjectRequest<PalestraCom> palestraRequest = new ObjectRequest<>(
-                    PalestraCom.class, Request.Method.GET, BASEURL+"palestra", null);
+                    PalestraCom.class, Request.Method.GET, getUrl(BASEURL, "palestra", comunicacao.getLast_update()), null);
 
             ObjectRequest<MinistracaoCom> ministracaoRequest = new ObjectRequest<>(
-                    MinistracaoCom.class, Request.Method.GET, BASEURL+"ministracao", null);
+                    MinistracaoCom.class, Request.Method.GET, getUrl(BASEURL, "ministracao", comunicacao.getLast_update()), null);
 
             ObjectRequest<InscricaoCom> inscricaoRequest = new ObjectRequest<>(
-                    InscricaoCom.class, Request.Method.GET, BASEURL+"inscricao", null);
+                    InscricaoCom.class, Request.Method.GET, getUrl(BASEURL, "inscricao", comunicacao.getLast_update()), null);
 
             ObjectRequest<PalestranteCom> palestranteRequest = new ObjectRequest<>(
-                    PalestranteCom.class, Request.Method.GET, BASEURL+"palestrante", null);
+                    PalestranteCom.class, Request.Method.GET, getUrl(BASEURL, "palestrante", comunicacao.getLast_update()), null);
 
             ObjectRequest<ParticipanteCom> participanteRequest = new ObjectRequest<>(
-                    ParticipanteCom.class, Request.Method.GET, BASEURL+"participante", null);
+                    ParticipanteCom.class, Request.Method.GET, getUrl(BASEURL, "participante", comunicacao.getLast_update()), null);
 
             //adicionando os ObjectRequests a uma lista para serem processadas
             requisicoes.add(eventoRequest);
@@ -93,6 +102,12 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
             //executando a sincronização
             proxyRest.sync(requisicoes);
+        }
+
+        private String getUrl(String baseurl, String entityName, Timestamp timestamp) {
+            String url = baseurl+entityName+"/dataAlteracao/"+timestamp;
+            url = url.replaceAll(" ", "%20");
+            return url;
         }
     }
 
