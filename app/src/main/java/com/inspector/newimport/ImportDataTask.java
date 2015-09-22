@@ -57,6 +57,7 @@ public class ImportDataTask implements Runnable {
         public void onErrorResponse(VolleyError error) {
             error.printStackTrace();
             mListener.update(false);
+            mQueue.cancelAll(this);
         }
     };
 
