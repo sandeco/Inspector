@@ -11,6 +11,7 @@ public class ProxyRest {
 
     public interface Listener {
         void onError(Exception e);
+
         void onSuccess();
     }
 
@@ -22,27 +23,29 @@ public class ProxyRest {
 
     public void sync(List<ObjectRequest> requisicoes) {
 
-        //1 passo: baixar os dados do servidor
-
+        //1o passo: baixar os dados do servidor
         try {
 
             DownloadRequests downloadRequests = new DownloadRequests();
             requisicoes = downloadRequests.download(requisicoes);
 
-        } catch (Exception e) {
-            mListener.onError(e);
-        }
+            for (ObjectRequest r : requisicoes) {
 
+                //testando como distinguir as listas para colocar no banco
+                if ((r.getObjects() != null) && (r.getObjects().size() > 0)) {
+                    if ((r.getObjects().get(0) instanceof Palestra)) {
+                        Log.v("ProxyRest", r.getObjects().get(0).toString());
+                    }
+                }
 
-        for (ObjectRequest r : requisicoes) {
-
-            if (r.getObjects().get(0) instanceof Palestra) {
-                Log.v("ProxyRest", r.getObjects().get(0).toString());
+                Log.v("ProxyRest", r.getUrl());
             }
 
-            Log.v("ProxyRest", r.getUrl());
-        }
+            mListener.onSuccess();
 
-        mListener.onSuccess();
+        } catch (Exception e) {
+            mListener.onError(e);
+            e.printStackTrace();
+        }
     }
 }

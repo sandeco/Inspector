@@ -8,8 +8,11 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.inspector.R;
 import com.inspector.modelcom.EventoCom;
+import com.inspector.modelcom.InscricaoCom;
 import com.inspector.modelcom.MinistracaoCom;
 import com.inspector.modelcom.PalestraCom;
+import com.inspector.modelcom.PalestranteCom;
+import com.inspector.modelcom.ParticipanteCom;
 import com.inspector.newimport.request.ObjectRequest;
 import com.inspector.util.App;
 import com.inspector.util.Notifier;
@@ -26,6 +29,7 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
     private ProxyRest proxyRest;
     private ScheduledExecutorService schedule;
+    private SyncTask syncTask;
 
     @Override
     public void onCreate() {
@@ -33,14 +37,14 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
         proxyRest = new ProxyRest(this);
         schedule = new ScheduledThreadPoolExecutor(1);
+        syncTask = new SyncTask();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         //executando a tarefa de sync a cada 2 minutos
-
-        schedule.scheduleAtFixedRate(new SyncTask(), 0, 120, TimeUnit.SECONDS);
+        schedule.scheduleAtFixedRate(syncTask, 0, 120, TimeUnit.SECONDS);
 
         return START_STICKY;
     }
@@ -70,10 +74,22 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
             ObjectRequest<MinistracaoCom> ministracaoRequest = new ObjectRequest<>(
                     MinistracaoCom.class, Request.Method.GET, BASEURL+"ministracao", null);
 
+            ObjectRequest<InscricaoCom> inscricaoRequest = new ObjectRequest<>(
+                    InscricaoCom.class, Request.Method.GET, BASEURL+"inscricao", null);
+
+            ObjectRequest<PalestranteCom> palestranteRequest = new ObjectRequest<>(
+                    PalestranteCom.class, Request.Method.GET, BASEURL+"palestrante", null);
+
+            ObjectRequest<ParticipanteCom> participanteRequest = new ObjectRequest<>(
+                    ParticipanteCom.class, Request.Method.GET, BASEURL+"participante", null);
+
             //adicionando os ObjectRequests a uma lista para serem processadas
             requisicoes.add(eventoRequest);
             requisicoes.add(palestraRequest);
             requisicoes.add(ministracaoRequest);
+            requisicoes.add(inscricaoRequest);
+            requisicoes.add(palestranteRequest);
+            requisicoes.add(participanteRequest);
 
             //executando a sincronização
             proxyRest.sync(requisicoes);
@@ -99,8 +115,9 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         Log.i(TAG, "Sendo destruído (onDestroy)");
+        schedule.shutdownNow();
+
+        super.onDestroy();
     }
 }
