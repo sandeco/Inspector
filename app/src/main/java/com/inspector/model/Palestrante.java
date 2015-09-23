@@ -1,5 +1,6 @@
 package com.inspector.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -7,7 +8,7 @@ import java.sql.Timestamp;
  */
 
 
-public class Palestrante {
+public class Palestrante implements Serializable {
 
     private int id;
 

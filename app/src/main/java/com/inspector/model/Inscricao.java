@@ -1,12 +1,13 @@
 package com.inspector.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by sanderson on 20/08/2015.
  */
 
-public class Inscricao {
+public class Inscricao implements Serializable {
 
     private int id;
     private Timestamp dataAlteracao;

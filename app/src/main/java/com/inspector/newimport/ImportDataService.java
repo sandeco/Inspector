@@ -5,24 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.inspector.R;
-import com.inspector.model.Comunicacao;
-import com.inspector.modelcom.EventoCom;
-import com.inspector.modelcom.InscricaoCom;
-import com.inspector.modelcom.MinistracaoCom;
-import com.inspector.modelcom.PalestraCom;
-import com.inspector.modelcom.PalestranteCom;
-import com.inspector.modelcom.ParticipanteCom;
-import com.inspector.newimport.request.ObjectRequest;
-import com.inspector.persistencia.ComunicacaoSPDao;
-import com.inspector.persistencia.dao.ComunicacaoDAO;
-import com.inspector.util.App;
 import com.inspector.util.Notifier;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -33,94 +17,40 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
     private ProxyRest proxyRest;
     private ScheduledExecutorService schedule;
-    private SyncTask syncTask;
-    private ComunicacaoDAO comunicacaoDAO;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        proxyRest = new ProxyRest(this);
+        proxyRest = new ProxyRest();
+        proxyRest.registerListener(this);
         schedule = new ScheduledThreadPoolExecutor(1);
-        syncTask = new SyncTask();
-
-        comunicacaoDAO = new ComunicacaoSPDao();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         //executando a tarefa de sync a cada 2 minutos
-        schedule.scheduleAtFixedRate(syncTask, 0, 120, TimeUnit.SECONDS);
+        schedule.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                proxyRest.sync();
+            }
+        }, 20, 120, TimeUnit.SECONDS);
 
         return START_STICKY;
-    }
-
-    /**
-     * Thread que agrupa as ações para sincronização.
-     */
-    private class SyncTask implements Runnable {
-
-        @Override
-        public void run() {
-            List<ObjectRequest> requisicoes = new ArrayList<>();
-
-            //pegando a url das preferencias do usuario
-            String BASEURL = App.getPreferences().getString(
-                    getString(R.string.pref_url_key),
-                    getString(R.string.pref_url_default));
-
-            Comunicacao comunicacao = comunicacaoDAO.get();
-
-            //criando os ObjectRequests que são representações de uma requisição
-            //e são usados para armazenar o resultado delas
-            ObjectRequest<EventoCom> eventoRequest = new ObjectRequest<>(
-                    EventoCom.class, Request.Method.GET, getUrl(BASEURL, "evento", comunicacao.getLast_update()), null);
-
-            ObjectRequest<PalestraCom> palestraRequest = new ObjectRequest<>(
-                    PalestraCom.class, Request.Method.GET, getUrl(BASEURL, "palestra", comunicacao.getLast_update()), null);
-
-            ObjectRequest<MinistracaoCom> ministracaoRequest = new ObjectRequest<>(
-                    MinistracaoCom.class, Request.Method.GET, getUrl(BASEURL, "ministracao", comunicacao.getLast_update()), null);
-
-            ObjectRequest<InscricaoCom> inscricaoRequest = new ObjectRequest<>(
-                    InscricaoCom.class, Request.Method.GET, getUrl(BASEURL, "inscricao", comunicacao.getLast_update()), null);
-
-            ObjectRequest<PalestranteCom> palestranteRequest = new ObjectRequest<>(
-                    PalestranteCom.class, Request.Method.GET, getUrl(BASEURL, "palestrante", comunicacao.getLast_update()), null);
-
-            ObjectRequest<ParticipanteCom> participanteRequest = new ObjectRequest<>(
-                    ParticipanteCom.class, Request.Method.GET, getUrl(BASEURL, "participante", comunicacao.getLast_update()), null);
-
-            //adicionando os ObjectRequests a uma lista para serem processadas
-            requisicoes.add(eventoRequest);
-            requisicoes.add(palestraRequest);
-            requisicoes.add(ministracaoRequest);
-            requisicoes.add(inscricaoRequest);
-            requisicoes.add(palestranteRequest);
-            requisicoes.add(participanteRequest);
-
-            //executando a sincronização
-            proxyRest.sync(requisicoes);
-        }
-
-        private String getUrl(String baseurl, String entityName, Timestamp timestamp) {
-            String url = baseurl+entityName+"/dataAlteracao/"+timestamp;
-            url = url.replaceAll(" ", "%20");
-            return url;
-        }
     }
 
     @Override
     public void onError(Exception e) {
         Log.i(TAG, "ERROR");
-        Notifier.show("Sync", "An error occurred.");
+        Notifier.show("Sync failed", e.getMessage());
     }
 
     @Override
     public void onSuccess() {
         Log.i(TAG, "SUCCESS");
-        Notifier.show("Sync", "Success!");
+        Notifier.show("Inspector is update", "Sync with the server is completed.");
     }
 
     @Override

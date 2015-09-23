@@ -105,6 +105,6 @@ public class DownloadRequests {
         Log.e(TAG, "ERROR "+error+" in request "+request);
         error.printStackTrace();
 
-        mErrorException = new Exception("Request "+request+" failed. "+error);
+        mErrorException = new Exception("Downloading of the data has failed.");
     }
 }

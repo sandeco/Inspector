@@ -1,9 +1,10 @@
 package com.inspector.newimport.request;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class ObjectRequest<T> {
+public class ObjectRequest<T extends Serializable> {
 
     private Class<T> clazz;
     private int method;
