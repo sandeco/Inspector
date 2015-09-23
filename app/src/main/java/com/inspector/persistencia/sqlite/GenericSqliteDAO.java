@@ -49,7 +49,12 @@ public abstract class GenericSqliteDAO<T, ID extends Serializable>  implements G
         this.db = db;
     }
 
+    @Override
     public void close() {
+        if (db != null) {
+            db.close();
+        }
+
         helper.close();
         helper = null;
     }

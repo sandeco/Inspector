@@ -5,44 +5,122 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.inspector.R;
+import com.inspector.model.Comunicacao;
+import com.inspector.modelcom.EventoCom;
+import com.inspector.modelcom.InscricaoCom;
+import com.inspector.modelcom.MinistracaoCom;
+import com.inspector.modelcom.PalestraCom;
+import com.inspector.modelcom.PalestranteCom;
+import com.inspector.modelcom.ParticipanteCom;
+import com.inspector.newimport.request.ObjectRequest;
+import com.inspector.persistencia.ComunicacaoSPDao;
+import com.inspector.persistencia.dao.ComunicacaoDAO;
+import com.inspector.util.App;
+import com.inspector.util.Notifier;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ImportDataService extends Service implements ImportDataTask.Listener {
+public class ImportDataService extends Service implements ProxyRest.Listener {
 
     private static final String TAG = "ImportDataService";
 
-    private ImportDataTask mImportDataTask;
-    private ScheduledThreadPoolExecutor mThreadPool;
+    private ProxyRest proxyRest;
+    private ScheduledExecutorService schedule;
+    private SyncTask syncTask;
+    private ComunicacaoDAO comunicacaoDAO;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mImportDataTask = new ImportDataTask(this);
-        mThreadPool = new ScheduledThreadPoolExecutor(1);
+        proxyRest = new ProxyRest(this);
+        schedule = new ScheduledThreadPoolExecutor(1);
+        syncTask = new SyncTask();
+
+        comunicacaoDAO = new ComunicacaoSPDao();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i(TAG, "Service started!");
-
-        final int seconds = 20;
-
-        //configurando para a tarefa de importação ser executada a cada 20 segundos
-        mThreadPool.scheduleAtFixedRate(mImportDataTask, 0, seconds, TimeUnit.SECONDS);
+        //executando a tarefa de sync a cada 2 minutos
+        schedule.scheduleAtFixedRate(syncTask, 0, 120, TimeUnit.SECONDS);
 
         return START_STICKY;
     }
 
-    @Override
-    public void update(boolean success) {
+    /**
+     * Thread que agrupa as ações para sincronização.
+     */
+    private class SyncTask implements Runnable {
 
-        if (success)
-            Log.i(TAG, "Sincronização completada");
-        else
-            Log.i(TAG, "Sincronização falhou");
+        @Override
+        public void run() {
+            List<ObjectRequest> requisicoes = new ArrayList<>();
+
+            //pegando a url das preferencias do usuario
+            String BASEURL = App.getPreferences().getString(
+                    getString(R.string.pref_url_key),
+                    getString(R.string.pref_url_default));
+
+            Comunicacao comunicacao = comunicacaoDAO.get();
+
+            //criando os ObjectRequests que são representações de uma requisição
+            //e são usados para armazenar o resultado delas
+            ObjectRequest<EventoCom> eventoRequest = new ObjectRequest<>(
+                    EventoCom.class, Request.Method.GET, getUrl(BASEURL, "evento", comunicacao.getLast_update()), null);
+
+            ObjectRequest<PalestraCom> palestraRequest = new ObjectRequest<>(
+                    PalestraCom.class, Request.Method.GET, getUrl(BASEURL, "palestra", comunicacao.getLast_update()), null);
+
+            ObjectRequest<MinistracaoCom> ministracaoRequest = new ObjectRequest<>(
+                    MinistracaoCom.class, Request.Method.GET, getUrl(BASEURL, "ministracao", comunicacao.getLast_update()), null);
+
+            ObjectRequest<InscricaoCom> inscricaoRequest = new ObjectRequest<>(
+                    InscricaoCom.class, Request.Method.GET, getUrl(BASEURL, "inscricao", comunicacao.getLast_update()), null);
+
+            ObjectRequest<PalestranteCom> palestranteRequest = new ObjectRequest<>(
+                    PalestranteCom.class, Request.Method.GET, getUrl(BASEURL, "palestrante", comunicacao.getLast_update()), null);
+
+            ObjectRequest<ParticipanteCom> participanteRequest = new ObjectRequest<>(
+                    ParticipanteCom.class, Request.Method.GET, getUrl(BASEURL, "participante", comunicacao.getLast_update()), null);
+
+            //adicionando os ObjectRequests a uma lista para serem processadas
+            requisicoes.add(eventoRequest);
+            requisicoes.add(palestraRequest);
+            requisicoes.add(ministracaoRequest);
+            requisicoes.add(inscricaoRequest);
+            requisicoes.add(palestranteRequest);
+            requisicoes.add(participanteRequest);
+
+            //executando a sincronização
+            proxyRest.sync(requisicoes);
+        }
+
+        private String getUrl(String baseurl, String entityName, Timestamp timestamp) {
+            String url = baseurl+entityName+"/dataAlteracao/"+timestamp;
+            url = url.replaceAll(" ", "%20");
+            return url;
+        }
+    }
+
+    @Override
+    public void onError(Exception e) {
+        Log.i(TAG, "ERROR");
+        Notifier.show("Sync", "An error occurred.");
+    }
+
+    @Override
+    public void onSuccess() {
+        Log.i(TAG, "SUCCESS");
+        Notifier.show("Sync", "Success!");
     }
 
     @Override
@@ -52,8 +130,9 @@ public class ImportDataService extends Service implements ImportDataTask.Listene
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         Log.i(TAG, "Sendo destruído (onDestroy)");
+        schedule.shutdownNow();
+
+        super.onDestroy();
     }
 }

@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
  */
 public class App extends Application {
 
+    public static final String TAG = "Inspector";
     private static App singleton;
 
     public App() {

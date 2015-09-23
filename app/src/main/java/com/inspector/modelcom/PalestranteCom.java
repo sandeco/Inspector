@@ -1,9 +1,9 @@
 package com.inspector.modelcom;
 
-import com.inspector.model.Ministracao;
 import com.inspector.model.Palestra;
+import com.inspector.model.Palestrante;
 
-public class MinistracaoCom extends Ministracao {
+public class PalestranteCom extends Palestrante {
 
     private int idPalestra;
 

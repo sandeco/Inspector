@@ -8,7 +8,6 @@ import com.inspector.persistencia.dao.ComunicacaoDAO;
 import com.inspector.util.App;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  * Created by leandro on 02/09/15.
@@ -46,8 +45,10 @@ public class ComunicacaoSPDao implements ComunicacaoDAO {
 
         Comunicacao c = new Comunicacao();
         Timestamp lastUpdate = Timestamp.valueOf(
-                getSharedPreferences().getString(COMUNICACAO_LAST_UPDATE,
-                        new Timestamp(Calendar.getInstance().getTimeInMillis()).toString()));
+                getSharedPreferences().getString(
+                        COMUNICACAO_LAST_UPDATE,
+                        new Timestamp(0).toString())
+        );
 
         c.setLast_update(lastUpdate);
         c.setToken(getSharedPreferences().getString(COMUNICACAO_TOKEN, ""));

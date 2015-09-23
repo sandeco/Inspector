@@ -64,6 +64,6 @@
     <!-- URL do Servidor - Preferences -->
     <string name="pref_url_key">url</string>
     <string name="pref_url_label">Endereço do Servidor</string>
-    <string name="pref_url_default">http://192.168.0.158/inspector-server/evento/listAll</string>
+    <string name="pref_url_default">http://192.168.0.158/inspector/</string>
 
 </resources>
