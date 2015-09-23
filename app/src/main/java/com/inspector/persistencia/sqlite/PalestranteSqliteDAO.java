@@ -1,5 +1,8 @@
 package com.inspector.persistencia.sqlite;
 
+import android.content.ContentValues;
+
+import com.inspector.model.M;
 import com.inspector.model.Palestrante;
 import com.inspector.persistencia.dao.PalestranteDAO;
 
@@ -18,7 +21,17 @@ public class PalestranteSqliteDAO extends GenericSqliteDAO<Palestrante, Integer>
 
     @Override
     public Palestrante create(Palestrante entity) {
-        return null;
+
+        ContentValues values = new ContentValues();
+
+        values.put(M.Palestrante.ID, entity.getId());
+        values.put(M.Palestrante.DATA_ALTERACAO, entity.getDataAlteracao().toString());
+        values.put(M.Palestrante.NOME, entity.getNome());
+        values.put(M.Palestrante.PALESTRA_ID, entity.getPalestra().getId());
+
+        long retorno = getDbWriteble().insert(M.Palestrante.ENTITY_NAME, null, values);
+
+        return (retorno != -1) ? entity : null;
     }
 
     @Override

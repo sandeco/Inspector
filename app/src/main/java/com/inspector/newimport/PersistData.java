@@ -28,13 +28,11 @@ public class PersistData {
                 throw new Exception("Factory return a GenericDAO null.");
 
             for (Serializable object : list) {
-                  dao.create(object);
+                dao.create(object);
             }
             dao.close();
 
         }
-
-
 
         return requests;
     }
