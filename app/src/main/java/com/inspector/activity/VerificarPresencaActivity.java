@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.inspector.R;
+import com.inspector.activity.fragment.ListaAtividadesFragment;
 import com.inspector.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
@@ -43,7 +44,7 @@ public class VerificarPresencaActivity extends Activity implements OnClickListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_verificar_presenca);
 
-		ministracao = (Ministracao) getIntent().getSerializableExtra(ListaPalestrasActivity.EXTRA_MINISTRACAO);
+		ministracao = (Ministracao) getIntent().getSerializableExtra(ListaAtividadesFragment.EXTRA_MINISTRACAO);
 
 		if (ministracao != null) {
 			dialogConfirmacao = constroiDialogoConfirmacao();
