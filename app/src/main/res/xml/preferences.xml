@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:key="@string/pref_url_key"
-        android:defaultValue="@string/pref_url_default"
-        android:title="@string/pref_url_label"
-        android:inputType="text"/>
+    <!--<EditTextPreference-->
+    <!--android:key="@string/pref_url_key"-->
+    <!--android:defaultValue="@string/pref_url_default"-->
+    <!--android:title="@string/pref_url_label"-->
+    <!--android:inputType="text"/>-->
 
+    <com.inspector.preferences.QRCodeTextPreference
+        android:defaultValue="@string/pref_url_default"
+        android:key="@string/pref_url_key"
+        android:title="@string/pref_url_label"/>
 </PreferenceScreen>

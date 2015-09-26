@@ -66,4 +66,6 @@
     <string name="pref_url_label">Endereço do Servidor</string>
     <string name="pref_url_default"/>
 
+    <string name="title_activity_qrcode_reader">QRCodeReaderActivity</string>
+
 </resources>
