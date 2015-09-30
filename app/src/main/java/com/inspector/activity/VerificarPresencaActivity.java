@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.inspector.R;
 import com.inspector.activity.fragment.ListaAtividadesFragment;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
 

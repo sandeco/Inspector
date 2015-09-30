@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.inspector.R;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
 

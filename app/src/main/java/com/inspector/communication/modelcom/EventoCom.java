@@ -1,4 +1,4 @@
-package com.inspector.modelcom;
+package com.inspector.communication.modelcom;
 
 import com.inspector.model.Evento;
 

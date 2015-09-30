@@ -1,4 +1,4 @@
-package com.inspector.dao;
+package com.inspector.serverModel.dao;
 
 import android.content.ContentValues;
 import android.content.Context;

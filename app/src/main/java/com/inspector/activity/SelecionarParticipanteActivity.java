@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.inspector.R;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Participante;
 
 import jim.h.common.android.zxinglib.integrator.IntentIntegrator;

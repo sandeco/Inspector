@@ -1,6 +1,5 @@
-package com.inspector.newimport;
+package com.inspector.communication;
 
-import com.inspector.newimport.request.ObjectRequest;
 import com.inspector.persistencia.dao.GenericDAO;
 import com.inspector.persistencia.sqlite.GenericSqliteDAO;
 

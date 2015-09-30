@@ -1,15 +1,14 @@
-package com.inspector.newimport;
+package com.inspector.communication;
 
 import com.android.volley.Request;
 import com.inspector.R;
 import com.inspector.model.Comunicacao;
-import com.inspector.modelcom.EventoCom;
-import com.inspector.modelcom.InscricaoCom;
-import com.inspector.modelcom.MinistracaoCom;
-import com.inspector.modelcom.PalestraCom;
-import com.inspector.modelcom.PalestranteCom;
-import com.inspector.modelcom.ParticipanteCom;
-import com.inspector.newimport.request.ObjectRequest;
+import com.inspector.communication.modelcom.EventoCom;
+import com.inspector.communication.modelcom.InscricaoCom;
+import com.inspector.communication.modelcom.MinistracaoCom;
+import com.inspector.communication.modelcom.PalestraCom;
+import com.inspector.communication.modelcom.PalestranteCom;
+import com.inspector.communication.modelcom.ParticipanteCom;
 import com.inspector.persistencia.ComunicacaoSPDao;
 import com.inspector.persistencia.dao.ComunicacaoDAO;
 import com.inspector.util.App;
@@ -79,6 +78,8 @@ public class ProxyRest {
 
             DownloadRequests downloadRequests = new DownloadRequests();
             requisicoes = downloadRequests.download(requisicoes);
+
+            //TODO: pegar data atual do servidor
 
             PersistData persistData = new PersistData();
             persistData.persist(requisicoes);

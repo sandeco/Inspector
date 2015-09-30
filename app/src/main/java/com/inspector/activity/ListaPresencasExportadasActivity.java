@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.widget.SimpleAdapter;
 
 import com.google.gson.Gson;
-import com.inspector.dao.MinistracaoDAOImpl;
-import com.inspector.dao.ParticipacaoDAOImpl;
-import com.inspector.model.Participante;
+import com.inspector.serverModel.dao.MinistracaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.serverModel.Presenca;
 
 import java.util.ArrayList;

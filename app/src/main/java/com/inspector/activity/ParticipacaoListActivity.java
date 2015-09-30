@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.SimpleAdapter;
 
 import com.inspector.R;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Participacao;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.inspector.newimport.request;
+package com.inspector.communication;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;

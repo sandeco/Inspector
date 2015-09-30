@@ -1,4 +1,4 @@
-package com.inspector.newimport;
+package com.inspector.communication;
 
 import android.util.Log;
 
@@ -6,8 +6,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.inspector.newimport.request.InspectorRequest;
-import com.inspector.newimport.request.ObjectRequest;
 import com.inspector.util.App;
 
 import java.util.List;

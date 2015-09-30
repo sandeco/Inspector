@@ -122,13 +122,13 @@
         </activity>
 
         <service
-            android:name=".newimport.ImportDataService"
+            android:name=".communication.ImportDataService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
         <receiver
-            android:name=".newimport.ImportDataReceiver"
+            android:name=".communication.ImportDataReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>

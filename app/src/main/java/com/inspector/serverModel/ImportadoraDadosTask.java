@@ -12,7 +12,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.inspector.activity.ImportarDadosActivity;
 import com.inspector.persistencia.sqlite.DatabaseHelper;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 
 import java.io.File;
 import java.io.FileWriter;

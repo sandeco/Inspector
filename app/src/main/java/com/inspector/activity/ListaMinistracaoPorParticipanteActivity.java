@@ -6,7 +6,7 @@ import android.text.format.DateFormat;
 import android.widget.SimpleAdapter;
 
 import com.inspector.R;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 import com.inspector.model.Participacao;
 import com.inspector.model.Participante;
 

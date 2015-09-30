@@ -3,7 +3,7 @@ package com.inspector.serverModel;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.inspector.dao.ParticipacaoDAOImpl;
+import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;

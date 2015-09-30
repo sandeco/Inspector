@@ -1,4 +1,4 @@
-package com.inspector.dao;
+package com.inspector.serverModel.dao;
 
 import com.inspector.model.Ministracao;
 
