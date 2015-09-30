@@ -10,8 +10,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.inspector.R;
 import com.inspector.qrcode.QRCodeUtil;
@@ -21,7 +21,7 @@ import com.inspector.qrcode.QRCodeUtil;
  */
 public class QRCodeTextPreference extends DialogPreference implements QRCodeUtil.Listener {
 
-    private Button mQRCodeButton;
+    private ImageButton mQRCodeButton;
     private EditText mEditText;
     private String mText;
 
@@ -74,7 +74,7 @@ public class QRCodeTextPreference extends DialogPreference implements QRCodeUtil
     protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
-        mQRCodeButton = (Button) view.findViewById(R.id.qrcode_button);
+        mQRCodeButton = (ImageButton) view.findViewById(R.id.qrcode_button);
 
         mQRCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override

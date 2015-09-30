@@ -18,7 +18,10 @@
         android:layout_toLeftOf="@+id/qrcode_button"
         android:layout_toStartOf="@+id/qrcode_button"/>
 
-    <Button
+    <ImageButton
+        android:src="@drawable/bt_qrcode"
+        android:background="#FFF"
+        android:contentDescription="Ler QRCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ler QRCode"
