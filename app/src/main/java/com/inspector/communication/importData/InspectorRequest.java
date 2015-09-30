@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
@@ -30,6 +31,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
     private Map<String, String> mHeaders;
     private Class<T> mClazz;
     private ObjectMapper mMapper;
+    private ObjectRequest<T> mObjectRequest;
 
     public InspectorRequest(ObjectRequest<T> objectRequest, Response.Listener<List<T>> listener, Response.ErrorListener errorListener) {
         super(objectRequest.getMethod(), objectRequest.getUrl(), errorListener);
@@ -38,6 +40,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
         this.mHeaders = objectRequest.getHeaders();
         this.mClazz = objectRequest.getClazz();
         this.mMapper = new ObjectMapper();
+        this.mObjectRequest = objectRequest;
 
     }
 
@@ -88,5 +91,15 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
                 mMapper.getTypeFactory().constructParametrizedType(ArrayList.class, List.class, mClazz));
 
         return list;
+    }
+
+    @Override
+    public byte[] getBody() throws AuthFailureError {
+        try {
+            return mMapper.writeValueAsString(mObjectRequest.getObjects()).getBytes();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return super.getBody();
+        }
     }
 }

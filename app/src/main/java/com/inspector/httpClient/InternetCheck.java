@@ -3,11 +3,13 @@ package com.inspector.httpClient;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.inspector.util.App;
+
 public class InternetCheck {
 
-	public static boolean isConnected(Context context) {  
+	public static boolean isConnected() {
 	    boolean conectado;  	   
-	    ConnectivityManager conectivtyManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);  
+	    ConnectivityManager conectivtyManager = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 	    if (conectivtyManager.getActiveNetworkInfo() != null  
 	            && conectivtyManager.getActiveNetworkInfo().isAvailable()  
 	            && conectivtyManager.getActiveNetworkInfo().isConnected()) {  

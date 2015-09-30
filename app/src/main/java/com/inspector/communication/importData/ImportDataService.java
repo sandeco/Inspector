@@ -30,13 +30,15 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        //executando a tarefa de sync a cada 2 minutos
+        final int seconds = 5 * 60; //5 minutos
+
+        //executando a tarefa de sync de tempos em tempos
         schedule.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 proxyRest.sync();
             }
-        }, 20, 120, TimeUnit.SECONDS);
+        }, 20, seconds, TimeUnit.SECONDS);
 
         return START_STICKY;
     }
