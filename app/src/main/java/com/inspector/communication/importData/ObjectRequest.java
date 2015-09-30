@@ -1,4 +1,4 @@
-package com.inspector.communication;
+package com.inspector.communication.importData;
 
 import java.io.Serializable;
 import java.util.List;

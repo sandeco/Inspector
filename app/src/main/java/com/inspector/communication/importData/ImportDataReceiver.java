@@ -1,4 +1,4 @@
-package com.inspector.communication;
+package com.inspector.communication.importData;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

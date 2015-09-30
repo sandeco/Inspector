@@ -1,4 +1,4 @@
-package com.inspector.communication;
+package com.inspector.communication.importData;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;

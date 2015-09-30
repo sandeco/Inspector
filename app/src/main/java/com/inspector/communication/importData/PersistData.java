@@ -1,4 +1,4 @@
-package com.inspector.communication;
+package com.inspector.communication.importData;
 
 import com.inspector.persistencia.dao.GenericDAO;
 import com.inspector.persistencia.sqlite.GenericSqliteDAO;
