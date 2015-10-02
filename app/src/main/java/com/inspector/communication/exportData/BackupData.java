@@ -19,7 +19,7 @@ public class BackupData {
 
     private ObjectMapper mMapper;
 
-    public void backupData(@NonNull ObjectRequest request) throws Exception, IOException {
+    public void backupData(@NonNull ObjectRequest request) throws IOException {
 
         if (request.getObjects() == null) {
             throw new NullPointerException("Objects in ObjectRequest are null");
@@ -34,11 +34,14 @@ public class BackupData {
         }
 
         if (success) {
-            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+            String date = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
 
             String nomeArquivo = "InspectorParticipacoes_"+ date + ".txt";
             File file = new File(folder, nomeArquivo);
-            file.createNewFile();
+            boolean result = file.createNewFile();
+
+            if (!result)
+                throw new IOException("File don't created.");
 
             mMapper = new ObjectMapper();
 
@@ -49,7 +52,7 @@ public class BackupData {
             writer.close();
 
         } else {
-            throw new Exception("Backup file isn't created");
+            throw new IOException("Backup file isn't created");
         }
     }
 }

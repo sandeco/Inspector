@@ -47,7 +47,36 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     @Override
     public Ministracao findById(int id) {
-        return null;
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(M.Ministracao.ENTITY_NAME + ", " + M.Palestra.ENTITY_NAME);
+
+        String selection = M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID
+                + " AND " + M.Ministracao.ENTITY_NAME + "." + M.Ministracao.ID + " = ?";
+
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+
+        Cursor cursor = builder.query(getDbReadable(), null,
+                selection, selectionArgs, null, null, null);
+
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+
+        Palestra p = new Palestra();
+        p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
+        p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
+
+        Ministracao m = new Ministracao();
+        m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
+        m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
+        m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
+        m.setPalestra(p);
+
+        cursor.close();
+        return m;
     }
 
     @Override

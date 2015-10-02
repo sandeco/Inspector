@@ -31,7 +31,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
     private Map<String, String> mHeaders;
     private Class<T> mClazz;
     private ObjectMapper mMapper;
-    private ObjectRequest<T> mObjectRequest;
+    private List<T> mObjects;
 
     public InspectorRequest(ObjectRequest<T> objectRequest, Response.Listener<List<T>> listener, Response.ErrorListener errorListener) {
         super(objectRequest.getMethod(), objectRequest.getUrl(), errorListener);
@@ -40,8 +40,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
         this.mHeaders = objectRequest.getHeaders();
         this.mClazz = objectRequest.getClazz();
         this.mMapper = new ObjectMapper();
-        this.mObjectRequest = objectRequest;
-
+        this.mObjects = objectRequest.getObjects();
     }
 
     @Override
@@ -87,19 +86,26 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
      */
     private List<T> getList(String json) throws IOException {
 
-        List<T> list = mMapper.readValue(json,
+        return mMapper.readValue(json,
                 mMapper.getTypeFactory().constructParametrizedType(ArrayList.class, List.class, mClazz));
-
-        return list;
     }
 
     @Override
     public byte[] getBody() throws AuthFailureError {
         try {
-            return mMapper.writeValueAsString(mObjectRequest.getObjects()).getBytes();
+
+            if (mObjects == null)
+                return super.getBody();
+
+            return mMapper.writeValueAsBytes(mObjects);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return super.getBody();
         }
+    }
+
+    @Override
+    protected Map<String, String> getParams() throws AuthFailureError {
+        return super.getParams();
     }
 }

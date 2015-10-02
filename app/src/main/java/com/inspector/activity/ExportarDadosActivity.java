@@ -1,5 +1,6 @@
 package com.inspector.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,9 +14,8 @@ import android.widget.Toast;
 
 import com.inspector.R;
 import com.inspector.communication.exportData.ProxyExport;
-import com.inspector.httpClient.HttpClientListener;
 
-public class ExportarDadosActivity extends AppCompatActivity implements HttpClientListener, ProxyExport.Listener {
+public class ExportarDadosActivity extends AppCompatActivity implements ProxyExport.Listener {
 
 	public static final String JSON_EXPORTADO_EXTRA = "com.inspector.json_exportado_extra";
 	
@@ -45,58 +45,7 @@ public class ExportarDadosActivity extends AppCompatActivity implements HttpClie
 		});
 
 		ativarPrimeiraTela();
-
 	}
-
-//	public void exportarDados(View v) {
-//		ativarTelaCarregamento();
-//
-//		ProxyExport proxyExport = new ProxyExport(this);
-//		proxyExport.sync();
-//
-//
-////		//gera o JSON
-////		json = exportadora.getJsonEvento();
-////
-////		// data atual
-////		String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-////
-////
-////
-////
-////		//grava arquivo com json na pasta Downloas do dispositivo
-////		String nomeArquivo = "PresencasEvento "+ date + ".txt";
-////		String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + Environment.DIRECTORY_DOWNLOADS;
-////
-////		File arquivo = new File( dir, nomeArquivo);
-////		arquivo.createNewFile();
-////
-////		//exporta o JSON para o arquivo
-////		FileWriter writer = new FileWriter(arquivo);
-////		writer.write(json);
-////		writer.close();
-////
-////		Toast.makeText(this, getString(R.string.backup_exportado) + dir, Toast.LENGTH_SHORT).show();
-////
-////		if(InternetCheck.isConnected(this)){
-////			ativarTelaCarregamento();
-////
-////			PostHttpClientTask task = new PostHttpClientTask();
-////			task.addHttpClientListener(this);
-////
-////			//adiciona o JSON a task e a executa
-////			NameValuePair nameValuePair;
-////
-////			nameValuePair = new BasicNameValuePair("presenca", json);
-////			task.addNameValuePair(nameValuePair);
-////			task.execute(link);
-////
-////		}else{
-////			Toast.makeText(this, getString(R.string.internet_erro), Toast.LENGTH_LONG).show();
-////		}
-//
-//
-//	}
 
 	private void ativarTelaCarregamento() {
 		btExportar.setVisibility(View.INVISIBLE);
@@ -119,20 +68,10 @@ public class ExportarDadosActivity extends AppCompatActivity implements HttpClie
 		btListaPresencas.setVisibility(View.VISIBLE);
 	}
 
-	@Override
-	public void updateHttpClientListener(String result) {
-		ativarSegundaTela();
-		
-//		tvOutput.setText(getString(R.string.json_exportado) + result);
-		tvOutput.setText(getString(R.string.dados_exportados));
-		
-		Toast.makeText(this, getString(R.string.dados_exportados), Toast.LENGTH_LONG).show();
-	}
-	
 	public void abrirListaPresencasExportadas(View v) {
-//		Intent intent = new Intent(this, ListaPresencasExportadasActivity.class);
+		Intent intent = new Intent(this, ListaPresencasExportadasActivity.class);
 //		intent.putExtra(JSON_EXPORTADO_EXTRA, json);
-//		startActivity(intent);
+		startActivity(intent);
 	}
 
 	@Override
@@ -144,29 +83,20 @@ public class ExportarDadosActivity extends AppCompatActivity implements HttpClie
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		return id == R.id.action_settings || super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onError(Exception e) {
 		ativarSegundaTela();
-
 		tvOutput.setText(getString(R.string.erro_jsonExportacao));
 	}
 
 	@Override
 	public void onSuccess() {
 		ativarSegundaTela();
-
 		tvOutput.setText(getString(R.string.dados_exportados));
-
 		Toast.makeText(this, getString(R.string.dados_exportados), Toast.LENGTH_LONG).show();
 	}
 }
