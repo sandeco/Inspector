@@ -52,7 +52,9 @@
             android:id="@+id/tv_aguarde"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/aguarde_importacao" />
+            android:text="@string/aguarde_importacao"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"/>
         
     </LinearLayout>
 
