@@ -96,9 +96,9 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 
 	public void abrirListaParticipantes(View v) {
 		//carregando activity com a lista e passando a ministração para ela
-		Intent intent = new Intent(this, ListaParticipantesActivity.class);
-		intent.putExtra(EXTRA_MINISTRACAO, mMinistracao);
-		startActivityForResult(intent, ListaParticipantesActivity.REQUEST_CODE);
+		Intent intent = new Intent(this, ListaInscritosActivity.class);
+		intent.putExtra(ListaInscritosActivity.EXTRA_PALESTRA, mMinistracao.getPalestra());
+		startActivityForResult(intent, ListaInscritosActivity.REQUEST_CODE);
 	}
 
 //	==========================================================
@@ -108,9 +108,9 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == ListaParticipantesActivity.REQUEST_CODE) {
+		if (requestCode == ListaInscritosActivity.REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
-				etInscricao.setText(data.getStringExtra(ListaParticipantesActivity.EXTRA_NUMERO_INSCRITO));
+				etInscricao.setText(data.getStringExtra(ListaInscritosActivity.EXTRA_NUMERO_INSCRITO));
 				carregarInscritoNaTela();
 			}
 		}

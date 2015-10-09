@@ -28,12 +28,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.inspector.activity.MainActivity" />
-            >
         </activity>
         <activity
             android:name=".activity.VerificarPresencaActivity"
             android:label="@string/title_activity_verificar_presenca"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".activity.ListaPalestrasActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.inspector.activity.ListaPalestrasActivity" />
         </activity>
 
         <!-- O Zxing precisa dessa Activity para a leitura do QR Code -->
@@ -44,6 +47,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
+
         <activity
             android:name=".activity.ParticipacaoListActivity"
             android:label="@string/title_activity_activity_participacao_list"
@@ -80,7 +84,7 @@
             >
         </activity>
         <activity
-            android:name=".activity.ListaParticipantesActivity"
+            android:name=".activity.ListaInscritosActivity"
             android:label="@string/title_activity_lista_participantes"
             android:screenOrientation="portrait" >
         </activity>

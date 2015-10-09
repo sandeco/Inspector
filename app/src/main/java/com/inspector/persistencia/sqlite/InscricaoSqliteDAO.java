@@ -13,6 +13,7 @@ import com.inspector.persistencia.dao.PalestraDAO;
 import com.inspector.persistencia.dao.ParticipanteDAO;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> implements InscricaoDAO {
@@ -129,6 +130,67 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
         palestraDAO.close();
         participanteDAO.close();
         cursor.close();
+
+        return inscricao;
+    }
+
+    @Override
+    public List<Inscricao> listByPalestra(Palestra palestra) {
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(M.Inscricao.ENTITY_NAME);
+
+        String selection = M.Inscricao.PALESTRA_ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(palestra.getId())};
+
+        Cursor cursor = builder.query(getDbReadable(), null, selection, selectionArgs, null, null, null);
+
+        List<Inscricao> inscricoes = new ArrayList<>();
+        PalestraDAO palestraDAO = new PalestraSqliteDAO();
+        ParticipanteDAO participanteDAO = new ParticipanteSqliteDAO();
+
+        while (cursor.moveToNext()) {
+            Inscricao i = createInscricaoFromCursor(cursor, palestraDAO, participanteDAO);
+
+            if (i == null)
+                return null;
+
+            inscricoes.add(i);
+        }
+
+        palestraDAO.close();
+        participanteDAO.close();
+        cursor.close();
+
+        return inscricoes;
+    }
+
+    /**
+     * <p>Criar uma inscricao a partir de um Cursor. Deve ser passado os DAOs para criar
+     * o objeto complexo dentro do objeto Inscricao. Cursor.close() não é chamado dentro.
+     * deste método.</p>
+     *
+     * <p>O objeto Inscricao retornado pode ser null, neste caso, não foi possível criar os outros
+     * objetos complexos que estão dentro dele (Palestra e Participação).</p>
+     */
+    private Inscricao createInscricaoFromCursor(Cursor cursor, PalestraDAO palestraDAO, ParticipanteDAO participanteDAO) {
+        Inscricao inscricao = new Inscricao();
+
+        inscricao.setId(cursor.getInt(cursor.getColumnIndex(M.Inscricao.ID)));
+        inscricao.setDataAlteracao(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Inscricao.DATA_ALTERACAO))));
+
+        Participante participante =
+                participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
+
+        Palestra palestra =
+                palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
+
+        inscricao.setParticipante(participante);
+        inscricao.setPalestra(palestra);
+
+        if (participante == null || palestra == null)
+            inscricao = null;
 
         return inscricao;
     }
