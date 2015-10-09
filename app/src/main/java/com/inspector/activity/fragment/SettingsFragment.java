@@ -1,4 +1,4 @@
-package com.inspector.activity;
+package com.inspector.activity.fragment;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.inspector.activity.VerificarPresencaActivity;
+import com.inspector.activity.adapter.AtividadeAdapter;
 import com.inspector.model.Ministracao;
 import com.inspector.persistencia.dao.MinistracaoDAO;
 import com.inspector.persistencia.sqlite.MinistracaoSqliteDAO;

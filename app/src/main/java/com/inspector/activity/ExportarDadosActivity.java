@@ -75,19 +75,6 @@ public class ExportarDadosActivity extends AppCompatActivity implements ProxyExp
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.exportar_dados, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		return id == R.id.action_settings || super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public void onError(Exception e) {
 		ativarSegundaTela();
 		tvOutput.setText(getString(R.string.erro_jsonExportacao));
@@ -98,6 +85,23 @@ public class ExportarDadosActivity extends AppCompatActivity implements ProxyExp
 		ativarSegundaTela();
 		tvOutput.setText(getString(R.string.dados_exportados));
 		Toast.makeText(this, getString(R.string.dados_exportados), Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.exportar_dados, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		if (id == R.id.action_settings) {
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
 

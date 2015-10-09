@@ -33,8 +33,6 @@ import java.util.Calendar;
 
 public class VerificarPresencaActivity extends AppCompatActivity implements QRCodeUtil.Listener {
 
-	public static final String EXTRA_MINISTRACAO = "com.inspector.MINISTRACAO_ATUAL";
-
 	private AlertDialog dialogValidarPresenca;
 	private EditText etInscricao;
 	private TextView tvNome;

@@ -1,4 +1,4 @@
-package com.inspector.activity.fragment;
+package com.inspector.activity.adapter;
 
 import android.content.Context;
 import android.text.format.DateFormat;

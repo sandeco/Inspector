@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.inspector.activity.ListaInscritosActivity;
+import com.inspector.activity.adapter.InscricaoAdapter;
 import com.inspector.model.Inscricao;
 import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.InscricaoDAO;
