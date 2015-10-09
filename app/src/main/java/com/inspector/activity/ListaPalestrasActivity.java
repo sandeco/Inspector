@@ -1,5 +1,6 @@
 package com.inspector.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -24,7 +25,6 @@ public class ListaPalestrasActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.lista_palestras, menu);
 		return true;
 	}
@@ -32,12 +32,10 @@ public class ListaPalestrasActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
-//		switch (item.getItemId()) {
-//		case R.id.action_part_list:
-//			//por teste abrindo lista de participacoes
-//			startActivity(new Intent(this, ParticipacaoListActivity.class));
-//			break;
-//		}
+		int id = item.getItemId();
+
+		if (id == R.id.action_settings)
+			startActivity(new Intent(this, SettingsActivity.class));
 
 		return super.onOptionsItemSelected(item);
 	}
