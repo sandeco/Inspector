@@ -15,6 +15,7 @@ public class ListaPalestrasActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lista_palestras_activity);
 
+		//adicionando fragment que contém a lista
 		if (savedInstanceState == null)
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new ListaAtividadesFragment())

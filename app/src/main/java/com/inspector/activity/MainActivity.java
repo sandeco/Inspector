@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,26 +12,20 @@ import android.widget.TextView;
 
 import com.inspector.R;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 	
 	private Intent intent;
-	
-	private TextView tvVersion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
 		setContentView(R.layout.inspec_main);
 
-		//pegando objeto com informações do manifesto
-		PackageInfo pInfo;
-		
 		try {
-			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			
-			tvVersion = (TextView) findViewById(R.id.tvVersion);
-			tvVersion.setText("V"+pInfo.versionName);
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+
+			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+			tvVersion.setText(pInfo.versionName);
 			
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -61,19 +55,15 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+
 		if (id == R.id.action_settings) {
-			//abrindo activity de preferencias
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		}
