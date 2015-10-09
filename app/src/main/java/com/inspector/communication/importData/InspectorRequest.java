@@ -1,12 +1,12 @@
 package com.inspector.communication.importData;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,22 +77,8 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
     @Override
     public Request<?> setRetryPolicy(RetryPolicy retryPolicy) {
 
-        return super.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 240;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 2;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-                throw error;
-            }
-        });
+        return super.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     /**

@@ -1,11 +1,18 @@
 package com.inspector.persistencia.sqlite;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.inspector.model.Inscricao;
 import com.inspector.model.M;
+import com.inspector.model.Palestra;
+import com.inspector.model.Participante;
 import com.inspector.persistencia.dao.InscricaoDAO;
+import com.inspector.persistencia.dao.PalestraDAO;
+import com.inspector.persistencia.dao.ParticipanteDAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> implements InscricaoDAO {
@@ -16,7 +23,45 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
 
     @Override
     public Inscricao findById(int id) {
-        return null;
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(M.Inscricao.ENTITY_NAME);
+
+        String selection = M.Inscricao.ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+
+        Cursor cursor = builder.query(getDbReadable(), null, selection, selectionArgs, null, null, null);
+
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+
+        Inscricao inscricao = new Inscricao();
+
+        PalestraDAO palestraDAO = new PalestraSqliteDAO();
+        ParticipanteDAO participanteDAO = new ParticipanteSqliteDAO();
+
+        inscricao.setId(cursor.getInt(cursor.getColumnIndex(M.Inscricao.ID)));
+        inscricao.setDataAlteracao(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Inscricao.DATA_ALTERACAO))));
+
+        final Participante participante =
+                participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
+
+        final Palestra palestra =
+                palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
+
+        inscricao.setParticipante(participante);
+        inscricao.setPalestra(palestra);
+
+        if (participante == null || palestra == null)
+            inscricao = null;
+
+        palestraDAO.close();
+        participanteDAO.close();
+        cursor.close();
+
+        return inscricao;
     }
 
     @Override
@@ -41,5 +86,50 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
     @Override
     public void delete(Inscricao entity) {
 
+    }
+
+    @Override
+    public Inscricao findByPalestraAndParticipante(Palestra palestra, Participante participante) {
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(M.Inscricao.ENTITY_NAME);
+
+        String selection = M.Inscricao.PALESTRA_ID + " = ? AND " + M.Inscricao.PARTICIPANTE_ID + " = ?";
+        String[] selectionArgs = new String[] {
+                String.valueOf(palestra.getId()),
+                String.valueOf(participante.getId())
+        };
+
+        Cursor cursor = builder.query(getDbReadable(), null, selection, selectionArgs, null, null, null);
+
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+
+        Inscricao inscricao = new Inscricao();
+
+        PalestraDAO palestraDAO = new PalestraSqliteDAO();
+        ParticipanteDAO participanteDAO = new ParticipanteSqliteDAO();
+
+        inscricao.setId(cursor.getInt(cursor.getColumnIndex(M.Inscricao.ID)));
+        inscricao.setDataAlteracao(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Inscricao.DATA_ALTERACAO))));
+
+        participante = participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
+
+        palestra = palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
+
+        inscricao.setParticipante(participante);
+        inscricao.setPalestra(palestra);
+
+        if (participante == null || palestra == null)
+            inscricao = null;
+
+        palestraDAO.close();
+        participanteDAO.close();
+        cursor.close();
+
+        return inscricao;
     }
 }

@@ -1,5 +1,7 @@
 package com.inspector.communication.importData;
 
+import android.util.Log;
+
 import com.inspector.persistencia.dao.GenericDAO;
 import com.inspector.persistencia.sqlite.GenericSqliteDAO;
 
@@ -28,6 +30,7 @@ public class PersistData {
 
             for (Serializable object : list) {
                 dao.create(object);
+                Log.i("PersistData", object.toString());
             }
             dao.close();
 

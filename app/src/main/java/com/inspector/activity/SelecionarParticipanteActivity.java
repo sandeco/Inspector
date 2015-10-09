@@ -92,7 +92,7 @@ public class SelecionarParticipanteActivity extends Activity {
 
 			} else {
 
-				Toast.makeText(this, getString(R.string.inscricao_naoEcontrada), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.inscricao_nao_encontrada), Toast.LENGTH_LONG).show();
 
 			}
 		}else{

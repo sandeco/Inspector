@@ -42,7 +42,7 @@
     <string name="dados_naoImportados">Oops! Os dados não foram importados.</string>
     <string name="dados_importadosEgravados">Dados importados e gravados com sucesso!</string>
     <string name="dados_naoGravados">Oops! Os dados não foram gravados</string>
-    <string name="inscricao_naoEcontrada">Inscrição não encontrada</string>
+    <string name="inscricao_nao_encontrada">Inscrição não encontrada</string>
     <string name="inscricao_invalida">Digite uma inscrição válida</string>
     <string name="presenca_registrada">Presença registrada com sucesso</string>
     <string name="erro_presenca">Oops! Ocorreu um erro na gravação da presença</string>

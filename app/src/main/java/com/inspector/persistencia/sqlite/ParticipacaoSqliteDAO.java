@@ -51,7 +51,7 @@ public class ParticipacaoSqliteDAO extends GenericSqliteDAO<Participacao, Intege
     public Participacao create(Participacao entity) {
         ContentValues values = new ContentValues();
 
-        values.put(M.Participacao.ID, entity.getId());
+//        values.put(M.Participacao.ID, entity.getId());
         values.put(M.Participacao.PARTICIPANTE_ID, entity.getParticipante().getId());
         values.put(M.Participacao.MINISTRACAO_ID, entity.getMinistracao().getId());
         values.put(M.Participacao.DATA_ALTERACAO, entity.getDataAlteracao().toString());
