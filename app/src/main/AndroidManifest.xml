@@ -33,11 +33,6 @@
         </activity>
 
         <activity
-            android:name=".activity.ParticipacaoListActivity"
-            android:label="@string/title_activity_activity_participacao_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".activity.ImportarDadosActivity"
             android:label="@string/title_activity_importar_dados"
             android:parentActivityName=".activity.MainActivity"
@@ -73,7 +68,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.ListaMinistracaoPorParticipanteActivity"
+            android:name=".activity.ListaInscricaoPorParticipante"
             android:label="@string/title_activity_lista_ministracao_por_participante"
             android:screenOrientation="portrait" >
         </activity>

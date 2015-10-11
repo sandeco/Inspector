@@ -10,4 +10,6 @@ public interface InscricaoDAO extends GenericDAO<Inscricao, Integer> {
     Inscricao findByPalestraAndParticipante(Palestra palestra, Participante participante);
 
     List<Inscricao> listByPalestra(Palestra palestra);
+
+    List<Inscricao> listByParticipante(Participante participante);
 }

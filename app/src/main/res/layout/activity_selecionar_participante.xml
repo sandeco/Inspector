@@ -81,7 +81,7 @@
             android:background="#A9ABAE"
             android:layout_marginRight="10dp"
             android:contentDescription="@string/app_name"
-            android:onClick="qr"
+            android:onClick="readQRCode"
             />
 
         <ImageButton

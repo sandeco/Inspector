@@ -154,7 +154,38 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
             Inscricao i = createInscricaoFromCursor(cursor, palestraDAO, participanteDAO);
 
             if (i == null)
-                return null;
+                return new ArrayList<>();
+
+            inscricoes.add(i);
+        }
+
+        palestraDAO.close();
+        participanteDAO.close();
+        cursor.close();
+
+        return inscricoes;
+    }
+
+    @Override
+    public List<Inscricao> listByParticipante(Participante participante) {
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(M.Inscricao.ENTITY_NAME);
+
+        String selection = M.Inscricao.PARTICIPANTE_ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(participante.getId())};
+
+        Cursor cursor = builder.query(getDbReadable(), null, selection, selectionArgs, null, null, null);
+
+        List<Inscricao> inscricoes = new ArrayList<>();
+        PalestraDAO palestraDAO = new PalestraSqliteDAO();
+        ParticipanteDAO participanteDAO = new ParticipanteSqliteDAO();
+
+        while (cursor.moveToNext()) {
+            Inscricao i = createInscricaoFromCursor(cursor, palestraDAO, participanteDAO);
+
+            if (i == null)
+                return new ArrayList<>();
 
             inscricoes.add(i);
         }
