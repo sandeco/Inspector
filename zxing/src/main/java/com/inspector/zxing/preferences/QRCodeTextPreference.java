@@ -1,4 +1,4 @@
-package com.inspector.preferences;
+package com.inspector.zxing.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.inspector.R;
-import com.inspector.qrcode.QRCodeUtil;
+import com.inspector.zxing.R;
+import com.inspector.zxing.qrcode.QRCodeUtil;
 
 /**
  * Custom Preference for Input of Text using QR Code Reader

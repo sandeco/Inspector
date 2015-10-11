@@ -26,7 +26,7 @@ import com.inspector.persistencia.dao.InscricaoDAO;
 import com.inspector.persistencia.dao.ParticipacaoDAO;
 import com.inspector.persistencia.sqlite.InscricaoSqliteDAO;
 import com.inspector.persistencia.sqlite.ParticipacaoSqliteDAO;
-import com.inspector.qrcode.QRCodeUtil;
+import com.inspector.zxing.qrcode.QRCodeUtil;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -123,7 +123,9 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 
 	private void carregarInscritoNaTela() {
 
-		if (etInscricao.getText().length() != 0) {
+		String value = etInscricao.getText().toString();
+
+		if (!value.isEmpty() && value.matches("[0-9]+")) {
 
 			int numeroParticipante = Integer.parseInt(etInscricao.getText().toString());
 

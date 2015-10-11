@@ -7,7 +7,7 @@
     <!--android:title="@string/pref_url_label"-->
     <!--android:inputType="text"/>-->
 
-    <com.inspector.preferences.QRCodeTextPreference
+    <com.inspector.zxing.preferences.QRCodeTextPreference
         android:defaultValue="@string/pref_url_default"
         android:key="@string/pref_url_key"
         android:title="@string/pref_url_label"/>

@@ -14,7 +14,7 @@ public class InscricaoCom extends Inscricao {
         Palestra p = new Palestra();
         p.setId(idPalestra);
 
-        this.setPalestra(p);
+        super.setPalestra(p);
         this.idPalestra = idPalestra;
     }
 
@@ -26,7 +26,7 @@ public class InscricaoCom extends Inscricao {
         Participante p = new Participante();
         p.setId(idParticipante);
 
-        this.setParticipante(p);
+        super.setParticipante(p);
         this.idParticipante = idParticipante;
     }
 

@@ -1,13 +1,14 @@
-package com.inspector.qrcode;
+package com.inspector.zxing.qrcode;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.inspector.R;
+import com.inspector.zxing.R;
 
 import jim.h.common.android.zxinglib.integrator.IntentIntegrator;
 import jim.h.common.android.zxinglib.integrator.IntentResult;
+
 
 public class QRCodeReaderActivity extends Activity {
 

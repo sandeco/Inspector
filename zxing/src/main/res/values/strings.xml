@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">zxing</string>
+    <string name="msg_default_status">Posicione o QR Code dentro do retângulo para a leitura</string>
+    <string name="title_activity_qrcode_reader">QRCode Reader</string>
+</resources>

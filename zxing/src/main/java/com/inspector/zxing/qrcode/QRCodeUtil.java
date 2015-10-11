@@ -1,4 +1,4 @@
-package com.inspector.qrcode;
+package com.inspector.zxing.qrcode;
 
 import android.content.Context;
 import android.content.Intent;
