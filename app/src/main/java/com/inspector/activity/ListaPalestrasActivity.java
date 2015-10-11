@@ -7,19 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.inspector.R;
-import com.inspector.activity.fragment.ListaAtividadesFragment;
+import com.inspector.activity.fragment.ListaPalestrasFragment;
 
 public class ListaPalestrasActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.lista_palestras_activity);
+		setContentView(R.layout.activity_lista_palestras);
 
 		//adicionando fragment que contém a lista
 		if (savedInstanceState == null)
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new ListaAtividadesFragment())
+					.add(R.id.container, new ListaPalestrasFragment())
 					.commit();
 	}
 

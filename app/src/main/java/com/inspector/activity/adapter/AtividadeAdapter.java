@@ -29,13 +29,13 @@ public class AtividadeAdapter extends ArrayAdapter<Ministracao> {
         ViewGroup listItemView;
 
         if (convertView == null) {
-            listItemView = (ViewGroup) mInflater.inflate(R.layout.atividades_list_item, parent, false);
+            listItemView = (ViewGroup) mInflater.inflate(R.layout.simple_two_text_list_item, parent, false);
         } else {
             listItemView = (ViewGroup) convertView;
         }
 
-        TextView nomePalestra = (TextView) listItemView.findViewById(R.id.nome_palestra);
-        TextView data = (TextView) listItemView.findViewById(R.id.data_palestra);
+        TextView nomePalestra = (TextView) listItemView.findViewById(R.id.text_large);
+        TextView data = (TextView) listItemView.findViewById(R.id.text_small);
 
         nomePalestra.setText(getItem(position).getPalestra().getNome());
         data.setText(DateFormat.format("dd/MM/yyyy HH:mm", getItem(position).getDiaHora().getTime()).toString());

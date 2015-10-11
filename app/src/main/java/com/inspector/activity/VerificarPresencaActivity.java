@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.inspector.R;
-import com.inspector.activity.fragment.ListaAtividadesFragment;
+import com.inspector.activity.fragment.ListaPalestrasFragment;
 import com.inspector.model.Inscricao;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
@@ -50,7 +50,7 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_verificar_presenca);
 
-		mMinistracao = (Ministracao) getIntent().getSerializableExtra(ListaAtividadesFragment.EXTRA_MINISTRACAO);
+		mMinistracao = (Ministracao) getIntent().getSerializableExtra(ListaPalestrasFragment.EXTRA_MINISTRACAO);
 
 		if (mMinistracao != null) {
 			dialogValidarPresenca = createDialogValidarPresenca();

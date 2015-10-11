@@ -28,13 +28,13 @@ public class InscricaoAdapter extends ArrayAdapter<Inscricao> {
         ViewGroup listItemView;
 
         if (convertView == null) {
-            listItemView = (ViewGroup) mInflater.inflate(R.layout.inscritos_list_item, parent, false);
+            listItemView = (ViewGroup) mInflater.inflate(R.layout.simple_two_text_list_item, parent, false);
         } else {
             listItemView = (ViewGroup) convertView;
         }
 
-        TextView numeroInscricao = (TextView) listItemView.findViewById(R.id.tv_inscricao_numero);
-        TextView nomeParticipante = (TextView) listItemView.findViewById(R.id.tv_nome_participante);
+        TextView numeroInscricao = (TextView) listItemView.findViewById(R.id.text_small);
+        TextView nomeParticipante = (TextView) listItemView.findViewById(R.id.text_large);
 
         numeroInscricao.setText(String.valueOf(getItem(position).getParticipante().getId()));
         nomeParticipante.setText(getItem(position).getParticipante().getNome());

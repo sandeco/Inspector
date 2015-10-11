@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.inspector" >
+<manifest package="com.inspector"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".util.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.ListaPalestrasActivity"
             android:label="@string/title_lista_palestras"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.MainActivity" />
+                android:value="com.inspector.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.VerificarPresencaActivity"
@@ -29,92 +29,83 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.ListaPalestrasActivity" />
+                android:value="com.inspector.activity.ListaPalestrasActivity"/>
         </activity>
 
         <activity
             android:name=".activity.ImportarDadosActivity"
             android:label="@string/title_activity_importar_dados"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.MainActivity" />
+                android:value="com.inspector.activity.MainActivity"/>
             >
         </activity>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.ExportarDadosActivity"
             android:label="@string/title_activity_exportar_dados"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.MainActivity" />
+                android:value="com.inspector.activity.MainActivity"/>
             >
         </activity>
         <activity
             android:name=".activity.ListaInscritosActivity"
             android:label="@string/title_activity_lista_participantes"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.ListaInscricaoPorParticipante"
             android:label="@string/title_activity_lista_ministracao_por_participante"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.SelecionarParticipanteActivity"
             android:label="@string/title_activity_selecionar_participante"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.MainActivity" />
+                android:value="com.inspector.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.ListaPresencasExportadasActivity"
-            android:label="@string/title_activity_lista_presencas_exportadas" >
-        </activity>
-        <activity
-            android:name=".activity.Splash"
-            android:label="@string/title_activity_splash" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_lista_presencas_exportadas">
         </activity>
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".activity.MainActivity" >
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.MainActivity" />
+                android:value="com.inspector.activity.MainActivity"/>
         </activity>
 
         <service
             android:name=".communication.importData.ImportDataService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
         </service>
 
         <receiver
             android:name=".communication.importData.ImportDataReceiver"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
     </application>

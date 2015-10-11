@@ -3,6 +3,9 @@ package com.inspector.activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.inspector.R;
 import com.inspector.activity.adapter.InscricaoParticipanteAdapter;
@@ -22,22 +25,34 @@ public class ListaInscricaoPorParticipante extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_inscricao_por_participante);
 
-		Participante participante = (Participante)
-				getIntent().getSerializableExtra(EXTRA_PARTICIPANTE);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, new ListaInscricaoPorParticipanteFragment())
+				.commit();
+	}
 
-		if (participante != null) {
+	public static class ListaInscricaoPorParticipanteFragment extends ListFragment {
 
-			InscricaoDAO dao = new InscricaoSqliteDAO();
+		private Participante mParticipante;
 
-			List<Inscricao> inscricoes = dao.listByParticipante(participante);
-			InscricaoParticipanteAdapter adapter = new InscricaoParticipanteAdapter(this, inscricoes);
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-			ListFragment fragment = new ListFragment();
-			fragment.setListAdapter(adapter);
+			mParticipante = (Participante)
+					getActivity().getIntent().getSerializableExtra(EXTRA_PARTICIPANTE);
 
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, fragment)
-					.commit();
+			if (mParticipante != null) {
+
+				InscricaoDAO dao = new InscricaoSqliteDAO();
+
+				List<Inscricao> inscricoes = dao.listByParticipante(mParticipante);
+				InscricaoParticipanteAdapter adapter = new InscricaoParticipanteAdapter(getActivity(), inscricoes);
+
+				setListAdapter(adapter);
+
+				getActivity().setTitle(mParticipante.getNome());
+			}
+
+			return super.onCreateView(inflater, container, savedInstanceState);
 		}
 	}
 }

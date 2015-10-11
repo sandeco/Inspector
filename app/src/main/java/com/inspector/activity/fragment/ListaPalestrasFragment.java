@@ -17,14 +17,14 @@ import com.inspector.persistencia.sqlite.MinistracaoSqliteDAO;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class ListaAtividadesFragment extends ListFragment {
+public class ListaPalestrasFragment extends ListFragment {
 
     public static final String EXTRA_MINISTRACAO = "ministracao_object";
 
     private MinistracaoDAO dao;
     private List<Ministracao> ministracoes;
 
-    public ListaAtividadesFragment() {}
+    public ListaPalestrasFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
