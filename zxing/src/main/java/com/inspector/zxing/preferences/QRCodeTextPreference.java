@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -71,7 +70,7 @@ public class QRCodeTextPreference extends DialogPreference implements QRCodeUtil
     }
 
     @Override
-    protected void onBindDialogView(@NonNull View view) {
+    protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
         mQRCodeButton = (ImageButton) view.findViewById(R.id.qrcode_button);
@@ -89,7 +88,7 @@ public class QRCodeTextPreference extends DialogPreference implements QRCodeUtil
     }
 
     @Override
-    public void onResult(@NonNull String qrcodeResult) {
+    public void onResult(String qrcodeResult) {
         //retorno do leitor de qrcode
 
         if (!qrcodeResult.isEmpty()) {
@@ -163,7 +162,7 @@ public class QRCodeTextPreference extends DialogPreference implements QRCodeUtil
         }
 
         @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
+        public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeString(text);
         }

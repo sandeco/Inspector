@@ -2,7 +2,6 @@ package com.inspector.zxing.qrcode;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class QRCodeUtil {
 
     /* Listeners */
     public interface Listener {
-        void onResult(@NonNull String qrcodeResult);
+        void onResult(String qrcodeResult);
 
     }
 

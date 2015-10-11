@@ -8,10 +8,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -59,8 +58,6 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
             return Response.success(list, HttpHeaderParser.parseCacheHeaders(response));
 
         } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
-        } catch (JsonSyntaxException e) {
             return Response.error(new ParseError(e));
         } catch (JsonParseException e) {
             return Response.error(new ParseError(e));
