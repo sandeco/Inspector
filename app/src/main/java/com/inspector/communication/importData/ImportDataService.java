@@ -30,6 +30,8 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.i(TAG, "Service started.");
+
         final int seconds = 5 * 60; //5 minutos
 
         //executando a tarefa de sync de tempos em tempos
@@ -46,7 +48,8 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
     @Override
     public void onError(Exception e) {
         Log.i(TAG, "ERROR");
-        Notifier.show("Sync failed", e.getMessage());
+        //desativando notificação em caso de erro
+//        Notifier.show("Sync failed", e.getMessage());
     }
 
     @Override
