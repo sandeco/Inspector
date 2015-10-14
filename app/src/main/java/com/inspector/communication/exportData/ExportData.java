@@ -1,15 +1,21 @@
 package com.inspector.communication.exportData;
 
+import android.util.Log;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.inspector.communication.importData.InspectorRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspector.communication.importData.ObjectRequest;
 import com.inspector.util.App;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe responsável por exportar os dados para o servidor, no caso,
@@ -18,7 +24,7 @@ import java.util.List;
  */
 public class ExportData {
 
-    private static final String TAG = "REQUEST_TAG";
+    private static final String REQUEST_TAG = "REQUEST_TAG";
 
     private enum STATE {
         FINISH,
@@ -30,17 +36,23 @@ public class ExportData {
     private VolleyError mException;
     private STATE mState;
 
+    private ObjectMapper mapper;
+
     public ExportData() {
         mRequestQueue = Volley.newRequestQueue(App.getContext());
+        mapper = new ObjectMapper();
     }
 
-    public void export(ObjectRequest request) throws IOException, VolleyError {
+    public void export(final ObjectRequest request) throws IOException, VolleyError, JsonProcessingException {
 
-        InspectorRequest inspectorRequest = new InspectorRequest(request,
-                new Response.Listener<List>() {
+        final String json = mapper.writeValueAsString(request.getObjects());
+
+        StringRequest stringRequest = new StringRequest(request.getMethod(), request.getUrl(),
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(List response) {
+                    public void onResponse(String response) {
                         mState = STATE.FINISH;
+                        Log.i("ExportData", "Response from server: " + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -49,15 +61,21 @@ public class ExportData {
                         mState = STATE.FINISH_WITH_ERROR;
                         mException = error;
                     }
-                });
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("participacoes", json);
+                return params;
+            }
+        };
 
-        inspectorRequest.setTag(TAG);
-
-        mRequestQueue.add(inspectorRequest);
+        stringRequest.setTag(REQUEST_TAG);
+        mRequestQueue.add(stringRequest);
 
         do {
             if (mException != null) {
-                mRequestQueue.cancelAll(TAG);
+                mRequestQueue.cancelAll(REQUEST_TAG);
                 throw mException;
             }
         } while (mState == STATE.RUNNING);

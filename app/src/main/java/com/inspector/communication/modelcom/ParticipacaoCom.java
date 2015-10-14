@@ -1,8 +1,11 @@
 package com.inspector.communication.modelcom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Participacao;
 import com.inspector.model.Participante;
+
+import java.sql.Timestamp;
 
 public class ParticipacaoCom extends Participacao {
 
@@ -41,5 +44,29 @@ public class ParticipacaoCom extends Participacao {
     public void setParticipante(Participante participante) {
         super.setParticipante(participante);
         this.setIdParticipante(participante.getId());
+    }
+
+    @JsonIgnore
+    @Override
+    public Ministracao getMinistracao() {
+        return super.getMinistracao();
+    }
+
+    @JsonIgnore
+    @Override
+    public Participante getParticipante() {
+        return super.getParticipante();
+    }
+
+    @JsonIgnore
+    @Override
+    public int getId() {
+        return super.getId();
+    }
+
+    @JsonIgnore
+    @Override
+    public Timestamp getDataAlteracao() {
+        return super.getDataAlteracao();
     }
 }

@@ -11,6 +11,7 @@ public class ObjectRequest<T extends Serializable> {
     private String url;
     private Map<String, String> headers;
     private List<T> objects;
+    private Map<String, String> params;
 
     public List<T> getObjects() {
         return objects;
@@ -22,11 +23,10 @@ public class ObjectRequest<T extends Serializable> {
 
     public ObjectRequest() {}
 
-    public ObjectRequest(Class<T> clazz, int method, String url, Map<String, String> headers) {
+    public ObjectRequest(Class<T> clazz, int method, String url) {
         this.clazz = clazz;
         this.method = method;
         this.url = url;
-        this.headers = headers;
     }
 
     public Class<T> getClazz() {
@@ -70,5 +70,13 @@ public class ObjectRequest<T extends Serializable> {
                 ", headers=" + headers +
                 ", objects=" + objects +
                 '}';
+    }
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
     }
 }

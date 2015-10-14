@@ -86,7 +86,7 @@ public class ProxyRest {
 
     private ObjectRequest createObjectRequest(String entityName, Class clazz) {
         return new ObjectRequest<>(
-                clazz, Request.Method.GET, getUrl(mBaseUrl, entityName, mComunicacao.getLast_update()), null);
+                clazz, Request.Method.GET, getUrl(mBaseUrl, entityName, mComunicacao.getLast_update()));
     }
 
     private String getUrl(String baseurl, String entityName, Timestamp timestamp) {

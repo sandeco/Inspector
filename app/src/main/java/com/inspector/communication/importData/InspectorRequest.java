@@ -32,6 +32,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
     private Class<T> mClazz;
     private ObjectMapper mMapper;
     private List<T> mObjects;
+    private Map<String, String> params;
 
     public InspectorRequest(ObjectRequest<T> objectRequest, Response.Listener<List<T>> listener, Response.ErrorListener errorListener) {
         super(objectRequest.getMethod(), objectRequest.getUrl(), errorListener);
@@ -41,6 +42,7 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
         this.mClazz = objectRequest.getClazz();
         this.mMapper = new ObjectMapper();
         this.mObjects = objectRequest.getObjects();
+        this.params = objectRequest.getParams();
     }
 
     @Override
@@ -106,6 +108,6 @@ public class InspectorRequest<T extends Serializable> extends Request<List<T>> {
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-        return super.getParams();
+        return params;
     }
 }
