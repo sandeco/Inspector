@@ -13,13 +13,15 @@ import android.widget.Toast;
 
 import com.inspector.R;
 import com.inspector.communication.importData.ProxyRest;
+import com.inspector.communication.importData.ProxySummary;
 import com.inspector.httpClient.InternetCheck;
 
-public class ImportarDadosActivity extends AppCompatActivity implements ProxyRest.Listener {
+public class ImportarDadosActivity extends AppCompatActivity implements ProxyRest.Listener, ProxySummary.ProxySummaryListener {
 
     private ProgressBar progressBar;
     private TextView tvAguarde;
     private Button btImportar;
+    private Button btImportSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tvAguarde = (TextView) findViewById(R.id.tv_aguarde);
         btImportar = (Button) findViewById(R.id.bt_importar);
+        btImportSummary = (Button) findViewById(R.id.bt_import_summary);
 
         ativarTelaNormal();
     }
@@ -55,39 +58,49 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
         }
     }
 
+    public void importSummary(View v) {
+        if (InternetCheck.isConnected()) {
+            ativarTelaCarregamento();
+
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ProxySummary proxySummary = new ProxySummary();
+                    proxySummary.registerListener(ImportarDadosActivity.this);
+                    proxySummary.sync();
+                }
+            });
+
+            t.start();
+
+            tvAguarde.setText("Os dados estão sendo importados para o seu dispositivo");
+        } else {
+            Toast.makeText(this, getString(R.string.internet_erro), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void ativarTelaCarregamento() {
         btImportar.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         tvAguarde.setVisibility(View.VISIBLE);
+        btImportSummary.setVisibility(View.INVISIBLE);
     }
 
     private void ativarTelaNormal() {
         btImportar.setVisibility(View.VISIBLE);
+        btImportSummary.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         tvAguarde.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onError(Exception e) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ativarTelaNormal();
-                tvAguarde.setText(getString(R.string.dados_naoGravados));
-                tvAguarde.setVisibility(View.VISIBLE);
-            }
-        });
+        avisarErro();
     }
 
     @Override
     public void onSuccess() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ativarTelaNormal();
-                tvAguarde.setText(getString(R.string.dados_importadosEgravados));
-                tvAguarde.setVisibility(View.VISIBLE);
-            }
-        });
+        avisaSucesso();
     }
 
     @Override
@@ -105,5 +118,36 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void avisarErro() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ativarTelaNormal();
+                tvAguarde.setText(getString(R.string.dados_naoGravados));
+                tvAguarde.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void avisaSucesso() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ativarTelaNormal();
+                tvAguarde.setText(getString(R.string.dados_importadosEgravados));
+                tvAguarde.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onProxySummaryError(Exception e) {
+        avisarErro();
+    }
+
+    @Override
+    public void onProxySummarySuccess() {
+
     }
 }

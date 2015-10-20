@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.ListaPalestrasActivity"
+            android:name=".activity.ListaAtividadesActivity"
             android:label="@string/title_lista_palestras"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -25,11 +25,11 @@
         <activity
             android:name=".activity.VerificarPresencaActivity"
             android:label="@string/title_activity_verificar_presenca"
-            android:parentActivityName=".activity.ListaPalestrasActivity"
+            android:parentActivityName=".activity.ListaAtividadesActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.inspector.activity.ListaPalestrasActivity"/>
+                android:value=".activity.ListaAtividadesActivity"/>
         </activity>
 
         <activity

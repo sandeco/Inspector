@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	public void abrirListaPalestras(View v) {
-		intent = new Intent(this, ListaPalestrasActivity.class);
+		intent = new Intent(this, ListaAtividadesActivity.class);
 		startActivity(intent);
 	}
 	
