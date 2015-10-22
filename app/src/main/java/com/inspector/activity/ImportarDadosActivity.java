@@ -100,7 +100,7 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
 
     @Override
     public void onSuccess() {
-        avisaSucesso();
+        avisarSucesso();
     }
 
     @Override
@@ -131,7 +131,7 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
         });
     }
 
-    private void avisaSucesso() {
+    private void avisarSucesso() {
         runOnUiThread(new Runnable() {
             public void run() {
                 ativarTelaNormal();
@@ -148,6 +148,13 @@ public class ImportarDadosActivity extends AppCompatActivity implements ProxyRes
 
     @Override
     public void onProxySummarySuccess() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                avisarSucesso();
 
+                Intent intent = new Intent(ImportarDadosActivity.this, ListaPalestrasActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

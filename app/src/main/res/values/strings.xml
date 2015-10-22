@@ -28,7 +28,7 @@
     <string name="title_activity_exportar_dados">Exportar Dados</string>
     <string name="textOutput">Out</string>
     <string name="internet_erro">Sua internet está sem conexão ou desabilitada</string>
-    <string name="aguarde_importacao">Por favor aguarde...</string>
+    <string name="aguarde_importacao">Por favor aguarde…</string>
     <string name="title_activity_lista_participantes">Participantes Cadastrados</string>
     <string name="title_activity_lista_ministracao_por_participante">Atividades desse Inscrito</string>
     <string name="title_activity_selecionar_participante">Selecionar Participante</string>
@@ -38,7 +38,7 @@
     <string name="erro_jsonExportacao">Ocorreu um erro ao gerar o json para exportação</string>
     <string name="importando_dados">Importando dados de </string>
     <string name="importacao_sucesso">Os dados foram importados com sucesso!</string>
-    <string name="gravando_bd">Gravando no banco de dados local... essa operação pode levar alguns minutos</string>
+    <string name="gravando_bd">Gravando no banco de dados local… essa operação pode levar alguns minutos</string>
     <string name="dados_naoImportados">Oops! Os dados não foram importados.</string>
     <string name="dados_importadosEgravados">Dados importados e gravados com sucesso!</string>
     <string name="dados_naoGravados">Oops! Os dados não foram gravados</string>
@@ -67,5 +67,6 @@
     <string name="pref_url_default"/>
 
     <string name="title_activity_qrcode_reader">QRCodeReaderActivity</string>
+    <string name="title_activity_lista_palestras">Palestras do Evento</string>
 
 </resources>

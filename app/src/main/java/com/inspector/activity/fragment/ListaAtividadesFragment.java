@@ -19,8 +19,6 @@ import java.util.List;
 
 public class ListaAtividadesFragment extends ListFragment {
 
-    public static final String EXTRA_MINISTRACAO = "ministracao_object";
-
     private MinistracaoDAO dao;
     private List<Ministracao> ministracoes;
 
@@ -51,7 +49,7 @@ public class ListaAtividadesFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
 
         Intent intent = new Intent(getActivity(), VerificarPresencaActivity.class);
-        intent.putExtra(EXTRA_MINISTRACAO, ministracoes.get(position));
+        intent.putExtra(VerificarPresencaActivity.EXTRA_MINISTRACAO, ministracoes.get(position));
         startActivity(intent);
     }
 }
