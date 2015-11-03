@@ -49,6 +49,7 @@ public class ListaPalestrasFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Snackbar.make(v, "Testando clique", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(v, "Testando clique "+mPalestras.get(position).getId(), Snackbar.LENGTH_LONG).show();
+
     }
 }
