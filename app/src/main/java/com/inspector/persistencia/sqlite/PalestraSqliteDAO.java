@@ -108,7 +108,6 @@ public class PalestraSqliteDAO extends GenericSqliteDAO<Palestra, Integer> imple
         p.setDataAlteracao(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Palestra.DATA_ALTERACAO))));
         p.setId(cursor.getInt(cursor.getColumnIndex(M.Palestra.ID)));
         p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
-
         return p;
     }
 }
