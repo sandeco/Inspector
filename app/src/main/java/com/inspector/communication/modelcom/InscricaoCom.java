@@ -6,30 +6,24 @@ import com.inspector.model.Participante;
 
 public class InscricaoCom extends Inscricao {
 
-    public int getIdPalestra() {
-        return idPalestra;
-    }
-
     public void setIdPalestra(int idPalestra) {
-        Palestra p = new Palestra();
-        p.setId(idPalestra);
 
-        super.setPalestra(p);
-        this.idPalestra = idPalestra;
-    }
+        Palestra palestra = super.getPalestra();
 
-    public int getIdParticipante() {
-        return idParticipante;
+        if (palestra == null) {
+            palestra = new Palestra();
+            palestra.setId(idPalestra);
+            super.setPalestra(palestra);
+        }
     }
 
     public void setIdParticipante(int idParticipante) {
-        Participante p = new Participante();
-        p.setId(idParticipante);
+        Participante participante = super.getParticipante();
 
-        super.setParticipante(p);
-        this.idParticipante = idParticipante;
+        if (participante == null) {
+            participante = new Participante();
+            participante.setId(idParticipante);
+            super.setParticipante(participante);
+        }
     }
-
-    private int idPalestra;
-    private int idParticipante;
 }

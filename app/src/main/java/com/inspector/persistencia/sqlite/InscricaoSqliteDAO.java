@@ -76,6 +76,13 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
 
         long retorno = getDbWriteble().insert(M.Inscricao.ENTITY_NAME, null, contentValues);
 
+        ParticipanteDAO participanteDAO = new ParticipanteSqliteDAO();
+
+        if (entity.getParticipante().getDataAlteracao() != null)
+            participanteDAO.create(entity.getParticipante());
+
+        participanteDAO.close();
+
         return (retorno != -1) ? entity : null;
     }
 

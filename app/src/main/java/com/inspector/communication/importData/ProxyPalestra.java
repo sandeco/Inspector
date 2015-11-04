@@ -9,7 +9,6 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspector.R;
 import com.inspector.communication.modelcom.PalestraCom;
-import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.PalestraDAO;
 import com.inspector.persistencia.sqlite.PalestraSqliteDAO;
 import com.inspector.util.App;
@@ -33,15 +32,14 @@ public class ProxyPalestra {
 
     private String mBaseUrl;
     private RequestQueue mQueue;
-    private Palestra mPalestra;
+    private PalestraCom mPalestra;
     private PalestraDAO mPalestraDAO;
 
     public void sync(int idPalestra) {
         try {
             downloadAndPersist(idPalestra);
         } catch (Exception e) {
-            e.printStackTrace();
-            mListener.onProxyPalestraError(e);
+            notifyError(e);
         }
     }
 
@@ -60,8 +58,7 @@ public class ProxyPalestra {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mListener.onProxyPalestraError(error);
-                        error.printStackTrace();
+                        notifyError(error);
                     }
                 }
         );
@@ -81,8 +78,7 @@ public class ProxyPalestra {
 
             mListener.onProxyPalestraSuccess();
         } catch (IOException e) {
-            mListener.onProxyPalestraError(e);
-            e.printStackTrace();
+            notifyError(e);
         }
     }
 
@@ -98,6 +94,15 @@ public class ProxyPalestra {
         String url = mBaseUrl+"palestra/id/"+palestraId;
         url = url.replaceAll(" ", "%20");
         return url;
+    }
+
+    /**
+     * Procedimento de notificação de erro para o listener
+     * @param e Exceção lançada
+     */
+    private void notifyError(Exception e) {
+        e.printStackTrace();
+        mListener.onProxyPalestraError(e);
     }
 }
 
