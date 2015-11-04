@@ -68,5 +68,6 @@
 
     <string name="title_activity_qrcode_reader">QRCodeReaderActivity</string>
     <string name="title_activity_lista_palestras">Palestras do Evento</string>
+    <string name="title_activity_lista_ministracao">Horários desta Atividade</string>
 
 </resources>

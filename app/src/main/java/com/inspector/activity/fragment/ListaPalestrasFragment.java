@@ -1,5 +1,6 @@
 package com.inspector.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.inspector.activity.ListaMinistracaoActivity;
 import com.inspector.activity.adapter.PalestraAdapter;
 import com.inspector.communication.importData.ProxyPalestra;
 import com.inspector.model.Palestra;
@@ -21,6 +23,7 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
     private PalestraAdapter mAdapter;
     private PalestraDAO mPalestraDAO;
     private List<Palestra> mPalestras;
+    private Palestra mClickedPalestra;
 
     public ListaPalestrasFragment() {}
 
@@ -50,14 +53,14 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        final int idPalestra = mPalestras.get(position).getId();
+        mClickedPalestra = mPalestras.get(position);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 ProxyPalestra proxyPalestra = new ProxyPalestra();
                 proxyPalestra.registerListener(ListaPalestrasFragment.this);
-                proxyPalestra.sync(idPalestra);
+                proxyPalestra.sync(mClickedPalestra);
             }
         });
 
@@ -68,7 +71,8 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
     public void onProxyPalestraError(Exception e) {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Oops. Ocorreu um erro na busca pelos dados desta atividade",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -78,7 +82,9 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ListaMinistracaoActivity.class);
+                intent.putExtra(ListaMinistracaoActivity.PALESTRA_EXTRA, mClickedPalestra);
+                startActivity(intent);
             }
         });
     }

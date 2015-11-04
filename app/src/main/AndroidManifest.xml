@@ -110,7 +110,10 @@
 
         <activity
             android:name=".activity.ListaPalestrasActivity"
-            android:label="@string/title_activity_lista_palestras">
+            android:label="@string/title_activity_lista_palestras" >
+        </activity>
+        <activity android:name=".activity.ListaMinistracaoActivity"
+            android:label="@string/title_activity_lista_ministracao">
         </activity>
     </application>
 

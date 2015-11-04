@@ -9,6 +9,7 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspector.R;
 import com.inspector.communication.modelcom.PalestraCom;
+import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.PalestraDAO;
 import com.inspector.persistencia.sqlite.PalestraSqliteDAO;
 import com.inspector.util.App;
@@ -35,9 +36,9 @@ public class ProxyPalestra {
     private PalestraCom mPalestra;
     private PalestraDAO mPalestraDAO;
 
-    public void sync(int idPalestra) {
+    public void sync(Palestra palestra) {
         try {
-            downloadAndPersist(idPalestra);
+            downloadAndPersist(palestra.getId());
         } catch (Exception e) {
             notifyError(e);
         }

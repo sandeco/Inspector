@@ -150,4 +150,10 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
         return ministracoes;
     }
+
+    @Override
+    public List<Ministracao> listByPalestra(Palestra palestra) {
+        List<Ministracao> ministracoes = new ArrayList<>();
+        return ministracoes;
+    }
 }
