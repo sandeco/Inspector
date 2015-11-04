@@ -3,6 +3,7 @@ package com.inspector.persistencia.sqlite;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.support.annotation.NonNull;
 
 import com.inspector.model.M;
 import com.inspector.model.Ministracao;
@@ -29,20 +30,25 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
         List<Ministracao> ministracoes = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            Palestra p = new Palestra();
-            p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
-            p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
-
-            Ministracao m = new Ministracao();
-            m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
-            m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
-            m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
-            m.setPalestra(p);
-
+            Ministracao m = createMinistracaoFromCursor(cursor);
             ministracoes.add(m);
         }
 
         return ministracoes;
+    }
+
+    @NonNull
+    private Ministracao createMinistracaoFromCursor(Cursor cursor) {
+        Palestra p = new Palestra();
+        p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
+        p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
+
+        Ministracao m = new Ministracao();
+        m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
+        m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
+        m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
+        m.setPalestra(p);
+        return m;
     }
 
     @Override
@@ -65,15 +71,7 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
             return null;
         }
 
-        Palestra p = new Palestra();
-        p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
-        p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
-
-        Ministracao m = new Ministracao();
-        m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
-        m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
-        m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
-        m.setPalestra(p);
+        Ministracao m = createMinistracaoFromCursor(cursor);
 
         cursor.close();
         return m;
@@ -133,15 +131,7 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
         List<Ministracao> ministracoes = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            Palestra p = new Palestra();
-            p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
-            p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
-
-            Ministracao m = new Ministracao();
-            m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
-            m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
-            m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
-            m.setPalestra(p);
+            Ministracao m = createMinistracaoFromCursor(cursor);
 
             ministracoes.add(m);
         }
@@ -153,7 +143,30 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     @Override
     public List<Ministracao> listByPalestra(Palestra palestra) {
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        //selecionando tabelas palestra e ministracao
+        builder.setTables(M.Ministracao.ENTITY_NAME+", "+M.Palestra.ENTITY_NAME);
+
+        String selection = M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID
+                + " AND " + M.Ministracao.PALESTRA_ID + " = ?";
+
+        String [] selectionArgs = new String[]{
+                String.valueOf(palestra.getId())
+        };
+
+        Cursor cursor = builder.query(getDbReadable(), null,
+                selection, selectionArgs, null, null, M.Palestra.NOME+" ASC");
+
         List<Ministracao> ministracoes = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            Ministracao m = createMinistracaoFromCursor(cursor);
+            ministracoes.add(m);
+        }
+
+        cursor.close();
+
         return ministracoes;
     }
 }

@@ -1,5 +1,6 @@
 package com.inspector.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -7,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.inspector.R;
 import com.inspector.activity.ListaMinistracaoActivity;
+import com.inspector.activity.VerificarPresencaActivity;
 import com.inspector.activity.adapter.MinistracaoAdapter;
 import com.inspector.model.Ministracao;
 import com.inspector.model.Palestra;
@@ -37,6 +40,9 @@ public class ListaMinistracaoFragment extends ListFragment {
 
             mAdapter = new MinistracaoAdapter(getActivity(), mMinistracoes);
             setListAdapter(mAdapter);
+
+            String title = getString(R.string.title_activity_lista_ministracao)+" "+palestra.getNome();
+            getActivity().setTitle(title);
         }
 
         return rootView;
@@ -51,5 +57,9 @@ public class ListaMinistracaoFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        Intent intent = new Intent(getActivity(), VerificarPresencaActivity.class);
+        intent.putExtra(VerificarPresencaActivity.EXTRA_MINISTRACAO, mMinistracoes.get(position));
+        startActivity(intent);
     }
 }
