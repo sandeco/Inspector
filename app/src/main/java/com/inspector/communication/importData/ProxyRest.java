@@ -5,7 +5,7 @@ import com.inspector.R;
 import com.inspector.communication.modelcom.EventoCom;
 import com.inspector.communication.modelcom.InscricaoCom;
 import com.inspector.communication.modelcom.MinistracaoCom;
-import com.inspector.communication.modelcom.PalestraCom;
+import com.inspector.communication.modelcom.AtividadeCom;
 import com.inspector.communication.modelcom.PalestranteCom;
 import com.inspector.communication.modelcom.ParticipanteCom;
 import com.inspector.model.Comunicacao;
@@ -77,7 +77,7 @@ public class ProxyRest {
         mComunicacao = mComunicacaoDAO.get();
 
         mRequisicoes.add(createObjectRequest("evento", EventoCom.class));
-        mRequisicoes.add(createObjectRequest("palestra", PalestraCom.class));
+        mRequisicoes.add(createObjectRequest("palestra", AtividadeCom.class));
         mRequisicoes.add(createObjectRequest("ministracao", MinistracaoCom.class));
         mRequisicoes.add(createObjectRequest("inscricao", InscricaoCom.class));
         mRequisicoes.add(createObjectRequest("palestrante", PalestranteCom.class));

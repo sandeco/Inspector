@@ -47,7 +47,7 @@ public class ImportDataService extends Service implements ProxyRest.Listener {
 
     @Override
     public void onError(Exception e) {
-        Log.i(TAG, "ERROR");
+        Log.i(TAG, "ERROR: "+e.getMessage());
         //desativando notificação em caso de erro
 //        Notifier.show("Sync failed", e.getMessage());
     }
