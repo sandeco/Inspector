@@ -13,8 +13,8 @@ public class Ministracao implements Serializable {
 
 	private String local;
 
-	//bi-directional many-to-one association to Palestra
-	private Palestra palestra;
+	//bi-directional many-to-one association to Atividade
+	private Atividade atividade;
 
 	//bi-directional many-to-one association to Participacao
 	private List<Participacao> participacoes;
@@ -54,12 +54,12 @@ public class Ministracao implements Serializable {
 		this.local = local;
 	}
 
-	public Palestra getPalestra() {
-		return this.palestra;
+	public Atividade getAtividade() {
+		return this.atividade;
 	}
 
-	public void setPalestra(Palestra palestra) {
-		this.palestra = palestra;
+	public void setAtividade(Atividade atividade) {
+		this.atividade = atividade;
 	}
 
 	public List<Participacao> getParticipacoes() {

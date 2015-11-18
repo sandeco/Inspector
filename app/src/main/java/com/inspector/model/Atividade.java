@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
-public class Palestra implements Serializable {
+public class Atividade implements Serializable {
 
 	private int id;
 
@@ -25,7 +25,7 @@ public class Palestra implements Serializable {
     private List<Palestrante> palestrantes;
 
 
-    public Palestra() { super();}
+    public Atividade() { super();}
 
     public int getId() {
         return id;
@@ -69,14 +69,14 @@ public class Palestra implements Serializable {
 
     public Inscricao addInscricao(Inscricao inscricao) {
         getInscricoes().add(inscricao);
-        inscricao.setPalestra(this);
+        inscricao.setAtividade(this);
 
         return inscricao;
     }
 
     public Inscricao removeInscricao(Inscricao inscricao) {
         getInscricoes().remove(inscricao);
-        inscricao.setPalestra(null);
+        inscricao.setAtividade(null);
 
         return inscricao;
     }
@@ -91,14 +91,14 @@ public class Palestra implements Serializable {
 
     public Ministracao addMinistracao(Ministracao ministracao) {
         getMinistracoes().add(ministracao);
-        ministracao.setPalestra(this);
+        ministracao.setAtividade(this);
 
         return ministracao;
     }
 
     public Ministracao removeMinistracao(Ministracao ministracao) {
         getMinistracoes().remove(ministracao);
-        ministracao.setPalestra(null);
+        ministracao.setAtividade(null);
 
         return ministracao;
     }
@@ -114,14 +114,14 @@ public class Palestra implements Serializable {
 
     public Palestrante addPalestrante(Palestrante palestrante) {
         getPalestrantes().add(palestrante);
-        palestrante.setPalestra(this);
+        palestrante.setAtividade(this);
 
         return palestrante;
     }
 
     public Palestrante removePalestrante(Palestrante palestrante) {
         getPalestrantes().remove(palestrante);
-        palestrante.setPalestra(null);
+        palestrante.setAtividade(null);
 
         return palestrante;
     }

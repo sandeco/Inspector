@@ -37,7 +37,7 @@ public class AtividadeAdapter extends ArrayAdapter<Ministracao> {
         TextView nomePalestra = (TextView) listItemView.findViewById(R.id.text_large);
         TextView data = (TextView) listItemView.findViewById(R.id.text_small);
 
-        nomePalestra.setText(getItem(position).getPalestra().getNome());
+        nomePalestra.setText(getItem(position).getAtividade().getNome());
         data.setText(DateFormat.format("dd/MM/yyyy HH:mm", getItem(position).getDiaHora().getTime()).toString());
 
         return listItemView;

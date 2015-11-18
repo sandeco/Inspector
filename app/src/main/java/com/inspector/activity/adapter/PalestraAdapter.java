@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.inspector.R;
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 
 import java.util.List;
 
-public class PalestraAdapter extends ArrayAdapter<Palestra> {
+public class PalestraAdapter extends ArrayAdapter<Atividade> {
 
     private LayoutInflater mInflater;
 
-    public PalestraAdapter(Context context, List<Palestra> objects) {
+    public PalestraAdapter(Context context, List<Atividade> objects) {
         super(context, 0, objects);
 
         mInflater = LayoutInflater.from(context);

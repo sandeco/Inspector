@@ -1,19 +1,19 @@
 package com.inspector.communication.modelcom;
 
+import com.inspector.model.Atividade;
 import com.inspector.model.Inscricao;
-import com.inspector.model.Palestra;
 import com.inspector.model.Participante;
 
 public class InscricaoCom extends Inscricao {
 
     public void setIdPalestra(int idPalestra) {
 
-        Palestra palestra = super.getPalestra();
+        Atividade atividade = super.getAtividade();
 
-        if (palestra == null) {
-            palestra = new Palestra();
-            palestra.setId(idPalestra);
-            super.setPalestra(palestra);
+        if (atividade == null) {
+            atividade = new Atividade();
+            atividade.setId(idPalestra);
+            super.setAtividade(atividade);
         }
     }
 

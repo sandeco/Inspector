@@ -17,7 +17,7 @@ public class Evento implements Serializable{
     private Timestamp dataFim;
     private Timestamp dataInicio;
 
-    private List<Palestra> palestras;
+    private List<Atividade> atividades;
 
     public Evento() {}
 
@@ -70,24 +70,24 @@ public class Evento implements Serializable{
         this.dataInicio = dataInicio;
     }
 
-    public void setPalestras(List<Palestra> palestras) {
-        this.palestras = palestras;
+    public void setAtividades(List<Atividade> atividades) {
+        this.atividades = atividades;
     }
 
-    public List<Palestra> getPalestras() {
-        return this.palestras;
+    public List<Atividade> getAtividades() {
+        return this.atividades;
     }
 
-    public Palestra addPalestra(Palestra palestra) {
-        getPalestras().add(palestra);
-        palestra.setEvento(this);
-        return palestra;
+    public Atividade addPalestra(Atividade atividade) {
+        getAtividades().add(atividade);
+        atividade.setEvento(this);
+        return atividade;
     }
 
-    public Palestra removePalestra(Palestra palestra) {
-        getPalestras().remove(palestra);
-        palestra.setEvento(null);
-        return palestra;
+    public Atividade removePalestra(Atividade atividade) {
+        getAtividades().remove(atividade);
+        atividade.setEvento(null);
+        return atividade;
     }
 
 

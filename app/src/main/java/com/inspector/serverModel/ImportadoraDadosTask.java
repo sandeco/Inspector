@@ -136,9 +136,9 @@ public class ImportadoraDadosTask extends AsyncTask<String, String, Boolean>{
 
 					//se a palestra nao existe, então vamos adiciona-la ao banco
 
-					Log.i("ImportadoraDadosTask", "Criando Palestra cod:"+atividade.getCODATIVIDADE());
+					Log.i("ImportadoraDadosTask", "Criando Atividade cod:"+atividade.getCODATIVIDADE());
 
-					//criando registro Palestra no banco
+					//criando registro Atividade no banco
 					values.put("_id", Integer.parseInt(atividade.getCODATIVIDADE()));
 					values.put("nome", atividade.getATIVIDADE());
 					db.insert("palestra", null, values);
@@ -203,7 +203,7 @@ public class ImportadoraDadosTask extends AsyncTask<String, String, Boolean>{
 					//caso contrário, a palestra já existe no banco
 					//então vamos criar uma ministracao, com a nova data
 
-					Log.i("ImportadoraDadosTask", "Palestra cod:"+atividade.getCODATIVIDADE()+" ja existe no banco!");
+					Log.i("ImportadoraDadosTask", "Atividade cod:"+atividade.getCODATIVIDADE()+" ja existe no banco!");
 
 					//criando registro Ministracao no banco
 					values.put("_id", ministracaoIdCount);
@@ -342,9 +342,9 @@ public class ImportadoraDadosTask extends AsyncTask<String, String, Boolean>{
 
 					//se a palestra nao existe, então vamos adiciona-la ao banco
 
-					Log.i("ImportadoraDadosTask", "Criando Palestra cod:"+atividade.getCODATIVIDADE());
+					Log.i("ImportadoraDadosTask", "Criando Atividade cod:"+atividade.getCODATIVIDADE());
 
-					//criando registro Palestra no banco
+					//criando registro Atividade no banco
 					values.put("_id", Integer.parseInt(atividade.getCODATIVIDADE()));
 					values.put("nome", atividade.getATIVIDADE());
 					db.insertOrThrow("palestra", null, values);
@@ -409,7 +409,7 @@ public class ImportadoraDadosTask extends AsyncTask<String, String, Boolean>{
 					//caso contrário, a palestra já existe no banco
 					//então vamos criar uma ministracao, com a nova data
 
-					Log.i("ImportadoraDadosTask", "Palestra cod:"+atividade.getCODATIVIDADE()+" ja existe no banco!");
+					Log.i("ImportadoraDadosTask", "Atividade cod:"+atividade.getCODATIVIDADE()+" ja existe no banco!");
 
 					//criando registro Ministracao no banco
 					values.put("_id", ministracaoIdCount);

@@ -16,8 +16,8 @@ public class Palestrante implements Serializable {
 
     private String nome;
 
-    //bi-directional many-to-one association to Palestra
-    private Palestra palestra;
+    //bi-directional many-to-one association to Atividade
+    private Atividade atividade;
 
 
     public Palestrante() {
@@ -47,12 +47,12 @@ public class Palestrante implements Serializable {
         this.nome = nome;
     }
 
-    public Palestra getPalestra() {
-        return this.palestra;
+    public Atividade getAtividade() {
+        return this.atividade;
     }
 
-    public void setPalestra(Palestra palestra) {
-        this.palestra = palestra;
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 
 

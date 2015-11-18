@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.support.annotation.NonNull;
 
+import com.inspector.model.Atividade;
 import com.inspector.model.Inscricao;
 import com.inspector.model.M;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.InscricaoDAO;
 import com.inspector.persistencia.dao.MinistracaoDAO;
 import com.inspector.persistencia.dao.PalestraDAO;
@@ -17,27 +17,27 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PalestraSqliteDAO extends GenericSqliteDAO<Palestra, Integer> implements PalestraDAO {
+public class PalestraSqliteDAO extends GenericSqliteDAO<Atividade, Integer> implements PalestraDAO {
     @Override
-    public List<Palestra> listAll() {
+    public List<Atividade> listAll() {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(M.Palestra.ENTITY_NAME);
 
         Cursor cursor = builder.query(getDbReadable(), null, null, null, null, null, null);
 
-        List<Palestra> palestras = new ArrayList<>();
+        List<Atividade> atividades = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            Palestra p = createPalestraFromCursor(cursor);
-            palestras.add(p);
+            Atividade p = createPalestraFromCursor(cursor);
+            atividades.add(p);
         }
 
         cursor.close();
-        return palestras;
+        return atividades;
     }
 
     @Override
-    public Palestra findById(int id) {
+    public Atividade findById(int id) {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         builder.setTables(M.Palestra.ENTITY_NAME);
@@ -54,14 +54,14 @@ public class PalestraSqliteDAO extends GenericSqliteDAO<Palestra, Integer> imple
             return null;
         }
 
-        Palestra p = createPalestraFromCursor(cursor);
+        Atividade p = createPalestraFromCursor(cursor);
 
         cursor.close();
         return p;
     }
 
     @Override
-    public Palestra create(Palestra entity) {
+    public Atividade create(Atividade entity) {
         ContentValues values = new ContentValues();
 
         values.put(M.Palestra.ID, entity.getId());
@@ -93,18 +93,18 @@ public class PalestraSqliteDAO extends GenericSqliteDAO<Palestra, Integer> imple
     }
 
     @Override
-    public Palestra update(Palestra entity) {
+    public Atividade update(Atividade entity) {
         return null;
     }
 
     @Override
-    public void delete(Palestra entity) {
+    public void delete(Atividade entity) {
 
     }
 
     @NonNull
-    private Palestra createPalestraFromCursor(Cursor cursor) {
-        Palestra p = new Palestra();
+    private Atividade createPalestraFromCursor(Cursor cursor) {
+        Atividade p = new Atividade();
         p.setDataAlteracao(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Palestra.DATA_ALTERACAO))));
         p.setId(cursor.getInt(cursor.getColumnIndex(M.Palestra.ID)));
         p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));

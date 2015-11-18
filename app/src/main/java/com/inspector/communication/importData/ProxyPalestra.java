@@ -8,8 +8,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspector.R;
-import com.inspector.communication.modelcom.PalestraCom;
-import com.inspector.model.Palestra;
+import com.inspector.communication.modelcom.AtividadeCom;
+import com.inspector.model.Atividade;
 import com.inspector.persistencia.dao.PalestraDAO;
 import com.inspector.persistencia.sqlite.PalestraSqliteDAO;
 import com.inspector.util.App;
@@ -33,12 +33,12 @@ public class ProxyPalestra {
 
     private String mBaseUrl;
     private RequestQueue mQueue;
-    private PalestraCom mPalestra;
+    private AtividadeCom mPalestra;
     private PalestraDAO mPalestraDAO;
 
-    public void sync(Palestra palestra) {
+    public void sync(Atividade atividade) {
         try {
-            downloadAndPersist(palestra.getId());
+            downloadAndPersist(atividade.getId());
         } catch (Exception e) {
             notifyError(e);
         }
@@ -71,7 +71,7 @@ public class ProxyPalestra {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            mPalestra = mapper.readValue(response.toString(), PalestraCom.class);
+            mPalestra = mapper.readValue(response.toString(), AtividadeCom.class);
 
             mPalestraDAO = new PalestraSqliteDAO();
             mPalestraDAO.create(mPalestra);

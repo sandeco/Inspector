@@ -27,7 +27,7 @@ public class PalestranteSqliteDAO extends GenericSqliteDAO<Palestrante, Integer>
         values.put(M.Palestrante.ID, entity.getId());
         values.put(M.Palestrante.DATA_ALTERACAO, entity.getDataAlteracao().toString());
         values.put(M.Palestrante.NOME, entity.getNome());
-        values.put(M.Palestrante.PALESTRA_ID, entity.getPalestra().getId());
+        values.put(M.Palestrante.PALESTRA_ID, entity.getAtividade().getId());
 
         long retorno = getDbWriteble().insert(M.Palestrante.ENTITY_NAME, null, values);
 

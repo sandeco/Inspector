@@ -1,6 +1,6 @@
 package com.inspector.communication.modelcom;
 
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 import com.inspector.model.Palestrante;
 
 public class PalestranteCom extends Palestrante {
@@ -13,8 +13,8 @@ public class PalestranteCom extends Palestrante {
 
     public void setIdPalestra(int idPalestra) {
         this.idPalestra = idPalestra;
-        Palestra p = new Palestra();
+        Atividade p = new Atividade();
         p.setId(idPalestra);
-        this.setPalestra(p);
+        this.setAtividade(p);
     }
 }

@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inspector.model.Evento;
 import com.inspector.model.Inscricao;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PalestraCom extends Palestra {
+public class AtividadeCom extends Atividade {
 
     public void setIdEvento(int idEvento) {
         if (super.getEvento() == null) {

@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.inspector.model.M;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 import com.inspector.persistencia.dao.MinistracaoDAO;
 
 import java.sql.Timestamp;
@@ -39,7 +39,7 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
 
     @NonNull
     private Ministracao createMinistracaoFromCursor(Cursor cursor) {
-        Palestra p = new Palestra();
+        Atividade p = new Atividade();
         p.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.PALESTRA_ID)));
         p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
 
@@ -47,7 +47,7 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
         m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
         m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
         m.setLocal(cursor.getString(cursor.getColumnIndex(M.Ministracao.LOCAL)));
-        m.setPalestra(p);
+        m.setAtividade(p);
         return m;
     }
 
@@ -83,7 +83,7 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
         ContentValues values = new ContentValues();
 
         values.put(M.Ministracao.ID, entity.getId());
-        values.put(M.Ministracao.PALESTRA_ID, entity.getPalestra().getId());
+        values.put(M.Ministracao.PALESTRA_ID, entity.getAtividade().getId());
         values.put(M.Ministracao.DATA_ALTERACAO, entity.getDataAlteracao().toString());
         values.put(M.Ministracao.DIA_HORA, entity.getDiaHora().toString());
         values.put(M.Ministracao.LOCAL, entity.getLocal());
@@ -142,17 +142,17 @@ public class MinistracaoSqliteDAO extends GenericSqliteDAO<Ministracao, Integer>
     }
 
     @Override
-    public List<Ministracao> listByPalestra(Palestra palestra) {
+    public List<Ministracao> listByPalestra(Atividade atividade) {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
-        //selecionando tabelas palestra e ministracao
+        //selecionando tabelas atividade e ministracao
         builder.setTables(M.Ministracao.ENTITY_NAME+", "+M.Palestra.ENTITY_NAME);
 
         String selection = M.Palestra.ENTITY_NAME + "." + M.Palestra.ID + " = " + M.Ministracao.PALESTRA_ID
                 + " AND " + M.Ministracao.PALESTRA_ID + " = ?";
 
         String [] selectionArgs = new String[]{
-                String.valueOf(palestra.getId())
+                String.valueOf(atividade.getId())
         };
 
         Cursor cursor = builder.query(getDbReadable(), null,

@@ -2,7 +2,7 @@ package com.inspector.communication.importData;
 
 import com.android.volley.Request;
 import com.inspector.R;
-import com.inspector.communication.modelcom.PalestraCom;
+import com.inspector.communication.modelcom.AtividadeCom;
 import com.inspector.model.Comunicacao;
 import com.inspector.persistencia.ComunicacaoSPDao;
 import com.inspector.persistencia.dao.ComunicacaoDAO;
@@ -61,7 +61,7 @@ public class ProxySummary {
         mComunicacaoDAO = new ComunicacaoSPDao();
         mComunicacao = mComunicacaoDAO.get();
 
-        mRequisicoes.add(createObjectRequest("palestra", PalestraCom.class));
+        mRequisicoes.add(createObjectRequest("palestra", AtividadeCom.class));
     }
 
     private ObjectRequest createObjectRequest(String entity, Class clazz) {

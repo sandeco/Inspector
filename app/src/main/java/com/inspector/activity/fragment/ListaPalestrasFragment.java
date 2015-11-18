@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.inspector.activity.ListaMinistracaoActivity;
 import com.inspector.activity.adapter.PalestraAdapter;
 import com.inspector.communication.importData.ProxyPalestra;
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 import com.inspector.persistencia.dao.PalestraDAO;
 import com.inspector.persistencia.sqlite.PalestraSqliteDAO;
 
@@ -22,8 +22,8 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
 
     private PalestraAdapter mAdapter;
     private PalestraDAO mPalestraDAO;
-    private List<Palestra> mPalestras;
-    private Palestra mClickedPalestra;
+    private List<Atividade> mAtividades;
+    private Atividade mClickedAtividade;
 
     public ListaPalestrasFragment() {}
 
@@ -35,9 +35,9 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
 
         mPalestraDAO = new PalestraSqliteDAO();
 
-        mPalestras = mPalestraDAO.listAll();
+        mAtividades = mPalestraDAO.listAll();
 
-        mAdapter = new PalestraAdapter(getActivity(), mPalestras);
+        mAdapter = new PalestraAdapter(getActivity(), mAtividades);
         setListAdapter(mAdapter);
 
         return rootView;
@@ -53,14 +53,14 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        mClickedPalestra = mPalestras.get(position);
+        mClickedAtividade = mAtividades.get(position);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 ProxyPalestra proxyPalestra = new ProxyPalestra();
                 proxyPalestra.registerListener(ListaPalestrasFragment.this);
-                proxyPalestra.sync(mClickedPalestra);
+                proxyPalestra.sync(mClickedAtividade);
             }
         });
 
@@ -83,7 +83,7 @@ public class ListaPalestrasFragment extends ListFragment implements ProxyPalestr
             @Override
             public void run() {
                 Intent intent = new Intent(getActivity(), ListaMinistracaoActivity.class);
-                intent.putExtra(ListaMinistracaoActivity.PALESTRA_EXTRA, mClickedPalestra);
+                intent.putExtra(ListaMinistracaoActivity.PALESTRA_EXTRA, mClickedAtividade);
                 startActivity(intent);
             }
         });

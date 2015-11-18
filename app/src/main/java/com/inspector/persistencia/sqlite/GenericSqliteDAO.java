@@ -2,10 +2,10 @@ package com.inspector.persistencia.sqlite;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.inspector.model.Atividade;
 import com.inspector.model.Evento;
 import com.inspector.model.Inscricao;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
 import com.inspector.model.Palestrante;
 import com.inspector.model.Participacao;
 import com.inspector.model.Participante;
@@ -73,7 +73,7 @@ public abstract class GenericSqliteDAO<T, ID extends Serializable>  implements G
         GenericDAO dao = null;
         Serializable object = list.get(0);
 
-        if (object instanceof Palestra)
+        if (object instanceof Atividade)
             dao = new PalestraSqliteDAO();
         else if (object instanceof Evento)
             dao = new EventoSqliteDAO();

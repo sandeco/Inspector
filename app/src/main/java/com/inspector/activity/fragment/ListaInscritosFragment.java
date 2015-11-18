@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import com.inspector.activity.ListaInscritosActivity;
 import com.inspector.activity.adapter.InscricaoAdapter;
+import com.inspector.model.Atividade;
 import com.inspector.model.Inscricao;
-import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.InscricaoDAO;
 import com.inspector.persistencia.sqlite.InscricaoSqliteDAO;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ListaInscritosFragment extends ListFragment {
 
-    private Palestra mPalestra;
+    private Atividade mAtividade;
     private InscricaoDAO mInscricaoDAO;
     private List<Inscricao> mInscricoes;
 
@@ -28,14 +28,14 @@ public class ListaInscritosFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-        mPalestra = (Palestra) getActivity().getIntent()
+        mAtividade = (Atividade) getActivity().getIntent()
             .getSerializableExtra(ListaInscritosActivity.EXTRA_PALESTRA);
 
-        if (mPalestra != null) {
+        if (mAtividade != null) {
 
             mInscricaoDAO = new InscricaoSqliteDAO();
 
-            mInscricoes = mInscricaoDAO.listByPalestra(mPalestra);
+            mInscricoes = mInscricaoDAO.listByPalestra(mAtividade);
 
             InscricaoAdapter adapter = new InscricaoAdapter(getActivity(), mInscricoes);
             setListAdapter(adapter);

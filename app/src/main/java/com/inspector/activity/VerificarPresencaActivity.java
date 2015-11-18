@@ -65,7 +65,7 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 			fundoBusca = (LinearLayout) findViewById(R.id.fundoBusca);
 			TextView tvPalestra = (TextView) findViewById(R.id.tvPalestra);
 
-			tvPalestra.setText(mMinistracao.getPalestra().getNome());
+			tvPalestra.setText(mMinistracao.getAtividade().getNome());
 			limparCamposFormulario();
 		}
 	}
@@ -96,7 +96,7 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 	public void abrirListaParticipantes(View v) {
 		//carregando activity com a lista e passando a ministração para ela
 		Intent intent = new Intent(this, ListaInscritosActivity.class);
-		intent.putExtra(ListaInscritosActivity.EXTRA_PALESTRA, mMinistracao.getPalestra());
+		intent.putExtra(ListaInscritosActivity.EXTRA_PALESTRA, mMinistracao.getAtividade());
 		startActivityForResult(intent, ListaInscritosActivity.REQUEST_CODE);
 	}
 
@@ -136,7 +136,7 @@ public class VerificarPresencaActivity extends AppCompatActivity implements QRCo
 			Participante participante = new Participante();
 			participante.setId(numeroParticipante);
 
-			mInscricao = mInscricaoDAO.findByPalestraAndParticipante(mMinistracao.getPalestra(), participante);
+			mInscricao = mInscricaoDAO.findByPalestraAndParticipante(mMinistracao.getAtividade(), participante);
 
 			if (mInscricao != null) {
 				tvNome.setText(mInscricao.getParticipante().getNome());

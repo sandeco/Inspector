@@ -4,9 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 
+import com.inspector.model.Atividade;
 import com.inspector.model.Inscricao;
 import com.inspector.model.M;
-import com.inspector.model.Palestra;
 import com.inspector.model.Participante;
 import com.inspector.persistencia.dao.InscricaoDAO;
 import com.inspector.persistencia.dao.PalestraDAO;
@@ -49,13 +49,13 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
         final Participante participante =
                 participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
 
-        final Palestra palestra =
+        final Atividade atividade =
                 palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
 
         inscricao.setParticipante(participante);
-        inscricao.setPalestra(palestra);
+        inscricao.setAtividade(atividade);
 
-        if (participante == null || palestra == null)
+        if (participante == null || atividade == null)
             inscricao = null;
 
         palestraDAO.close();
@@ -71,7 +71,7 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
         ContentValues contentValues = new ContentValues();
         contentValues.put(M.Inscricao.ID, entity.getId());
         contentValues.put(M.Inscricao.DATA_ALTERACAO, entity.getDataAlteracao().toString());
-        contentValues.put(M.Inscricao.PALESTRA_ID, entity.getPalestra().getId());
+        contentValues.put(M.Inscricao.PALESTRA_ID, entity.getAtividade().getId());
         contentValues.put(M.Inscricao.PARTICIPANTE_ID, entity.getParticipante().getId());
 
         long retorno = getDbWriteble().insert(M.Inscricao.ENTITY_NAME, null, contentValues);
@@ -97,7 +97,7 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
     }
 
     @Override
-    public Inscricao findByPalestraAndParticipante(Palestra palestra, Participante participante) {
+    public Inscricao findByPalestraAndParticipante(Atividade atividade, Participante participante) {
 
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
@@ -105,7 +105,7 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
 
         String selection = M.Inscricao.PALESTRA_ID + " = ? AND " + M.Inscricao.PARTICIPANTE_ID + " = ?";
         String[] selectionArgs = new String[] {
-                String.valueOf(palestra.getId()),
+                String.valueOf(atividade.getId()),
                 String.valueOf(participante.getId())
         };
 
@@ -126,12 +126,12 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
 
         participante = participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
 
-        palestra = palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
+        atividade = palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
 
         inscricao.setParticipante(participante);
-        inscricao.setPalestra(palestra);
+        inscricao.setAtividade(atividade);
 
-        if (participante == null || palestra == null)
+        if (participante == null || atividade == null)
             inscricao = null;
 
         palestraDAO.close();
@@ -142,14 +142,14 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
     }
 
     @Override
-    public List<Inscricao> listByPalestra(Palestra palestra) {
+    public List<Inscricao> listByPalestra(Atividade atividade) {
 
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         builder.setTables(M.Inscricao.ENTITY_NAME);
 
         String selection = M.Inscricao.PALESTRA_ID + " = ?";
-        String[] selectionArgs = new String[]{String.valueOf(palestra.getId())};
+        String[] selectionArgs = new String[]{String.valueOf(atividade.getId())};
 
         Cursor cursor = builder.query(getDbReadable(), null, selection, selectionArgs, null, null, null);
 
@@ -210,7 +210,7 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
      * deste método.</p>
      *
      * <p>O objeto Inscricao retornado pode ser null, neste caso, não foi possível criar os outros
-     * objetos complexos que estão dentro dele (Palestra e Participação).</p>
+     * objetos complexos que estão dentro dele (Atividade e Participação).</p>
      */
     private Inscricao createInscricaoFromCursor(Cursor cursor, PalestraDAO palestraDAO, ParticipanteDAO participanteDAO) {
         Inscricao inscricao = new Inscricao();
@@ -221,13 +221,13 @@ public class InscricaoSqliteDAO extends GenericSqliteDAO<Inscricao, Integer> imp
         Participante participante =
                 participanteDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PARTICIPANTE_ID)));
 
-        Palestra palestra =
+        Atividade atividade =
                 palestraDAO.findById(cursor.getInt(cursor.getColumnIndex(M.Inscricao.PALESTRA_ID)));
 
         inscricao.setParticipante(participante);
-        inscricao.setPalestra(palestra);
+        inscricao.setAtividade(atividade);
 
-        if (participante == null || palestra == null)
+        if (participante == null || atividade == null)
             inscricao = null;
 
         return inscricao;

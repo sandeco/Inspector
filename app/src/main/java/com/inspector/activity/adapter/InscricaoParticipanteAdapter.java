@@ -36,7 +36,7 @@ public class InscricaoParticipanteAdapter extends ArrayAdapter<Inscricao> {
         TextView nomePalestra = (TextView) listItemView.findViewById(R.id.text_large);
         TextView data = (TextView) listItemView.findViewById(R.id.text_small);
 
-        nomePalestra.setText(getItem(position).getPalestra().getNome());
+        nomePalestra.setText(getItem(position).getAtividade().getNome());
         data.setText(""); //TODO
 
         return listItemView;

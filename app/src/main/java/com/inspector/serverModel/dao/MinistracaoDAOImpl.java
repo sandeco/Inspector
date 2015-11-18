@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import com.inspector.model.Atividade;
 import com.inspector.model.M;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
 import com.inspector.persistencia.sqlite.DatabaseHelper;
 
 import java.sql.Timestamp;
@@ -49,8 +49,8 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 
 		Log.d("MinistracaoDAOImpl", "Data de hoje para busca no banco: "+dataHoje);
 
-//		Cursor cursor = getDb().rawQuery("SELECT * FROM "+M.Ministracao.ENTITY_NAME+", "+M.Palestra.ENTITY_NAME+" WHERE " +
-//				M.Palestra.ID+" = "+M.Ministracao.PALESTRA_ID+" AND "+M.Ministracao.DIA_HORA+" = ? ORDER BY "+M.Palestra.NOME+" ASC",
+//		Cursor cursor = getDb().rawQuery("SELECT * FROM "+M.Ministracao.ENTITY_NAME+", "+M.Atividade.ENTITY_NAME+" WHERE " +
+//				M.Atividade.ID+" = "+M.Ministracao.PALESTRA_ID+" AND "+M.Ministracao.DIA_HORA+" = ? ORDER BY "+M.Atividade.NOME+" ASC",
 //				new String[]{dataHoje});
 
 //		Cursor cursor = getDb().rawQuery("SELECT ministracao._id, ministracao.palestra_id, palestra.nome FROM ministracao, palestra " +
@@ -71,14 +71,14 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 		List<Ministracao> ministracoes = new ArrayList<Ministracao>();
 
 		while (cursor.moveToNext()) {
-			Palestra p = new Palestra();
+			Atividade p = new Atividade();
 			p.setId(cursor.getInt(cursor.getColumnIndex(M.Palestra.ID)));
 			p.setNome(cursor.getString(cursor.getColumnIndex(M.Palestra.NOME)));
 			
 			Ministracao m = new Ministracao();
 			m.setId(cursor.getInt(cursor.getColumnIndex(M.Ministracao.ID)));
 			m.setDiaHora(Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(M.Ministracao.DIA_HORA))));
-			m.setPalestra(p);
+			m.setAtividade(p);
 			ministracoes.add(m);
 		}
 
@@ -100,7 +100,7 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 
 			try {
 
-				Palestra palestra = new Palestra(
+				Atividade palestra = new Atividade(
 						cursor.getString(cursor.getColumnIndex("nome")),
 						cursor.getInt(cursor.getColumnIndex("palestra_id"))
 						);
@@ -131,7 +131,7 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 		ContentValues values = new ContentValues();
 
 		values.put("_id", m.getId());
-		values.put("palestra_id", m.getPalestra().getId());
+		values.put("palestra_id", m.getAtividade().getId());
 
 
 		long retorno = getDb().insert("ministracao", null, values);
@@ -166,7 +166,7 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 		try {
 
 			ministracao = new Ministracao(cursor.getInt(cursor.getColumnIndex("_id")), 
-					new Palestra(cursor.getString(cursor.getColumnIndex("nome")), 
+					new Atividade(cursor.getString(cursor.getColumnIndex("nome")),
 							cursor.getInt(cursor.getColumnIndex("palestra_id"))), 
 							dateFormat.parse(cursor.getString(cursor.getColumnIndex("data"))));
 
@@ -181,13 +181,13 @@ public class MinistracaoDAOImpl implements MinistracaoDAO {
 		return ministracao;
 	}
 
-	public Palestra buscarPalestraPorId(int id) {
-		Palestra p = null;
+	public Atividade buscarPalestraPorId(int id) {
+		Atividade p = null;
 		
 		Cursor cursor = getDb().rawQuery("SELECT * FROM palestra WHERE palestra._id = "+id, null);
 		
 		while (cursor.moveToNext()) {
-			p = new Palestra();
+			p = new Atividade();
 			p.setId(id);
 			p.setNome(cursor.getString(cursor.getColumnIndex("nome")));
 			break;

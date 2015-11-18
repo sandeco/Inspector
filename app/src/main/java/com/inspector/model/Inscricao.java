@@ -12,8 +12,8 @@ public class Inscricao implements Serializable {
     private int id;
     private Timestamp dataAlteracao;
 
-    //bi-directional many-to-one association to Palestra
-    private Palestra palestra;
+    //bi-directional many-to-one association to Atividade
+    private Atividade atividade;
 
     //bi-directional many-to-one association to Participante
     private Participante participante;
@@ -38,12 +38,12 @@ public class Inscricao implements Serializable {
         this.dataAlteracao = dataAlteracao;
     }
 
-    public Palestra getPalestra() {
-        return this.palestra;
+    public Atividade getAtividade() {
+        return this.atividade;
     }
 
-    public void setPalestra(Palestra palestra) {
-        this.palestra = palestra;
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 
     public Participante getParticipante() {

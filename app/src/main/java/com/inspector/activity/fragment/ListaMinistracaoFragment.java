@@ -12,8 +12,8 @@ import com.inspector.R;
 import com.inspector.activity.ListaMinistracaoActivity;
 import com.inspector.activity.VerificarPresencaActivity;
 import com.inspector.activity.adapter.MinistracaoAdapter;
+import com.inspector.model.Atividade;
 import com.inspector.model.Ministracao;
-import com.inspector.model.Palestra;
 import com.inspector.persistencia.dao.MinistracaoDAO;
 import com.inspector.persistencia.sqlite.MinistracaoSqliteDAO;
 
@@ -29,19 +29,19 @@ public class ListaMinistracaoFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-        Palestra palestra = (Palestra) getActivity().getIntent()
+        Atividade atividade = (Atividade) getActivity().getIntent()
                 .getSerializableExtra(ListaMinistracaoActivity.PALESTRA_EXTRA);
 
-        if (palestra != null) {
+        if (atividade != null) {
 
             mDAO = new MinistracaoSqliteDAO();
 
-            mMinistracoes = mDAO.listByPalestra(palestra);
+            mMinistracoes = mDAO.listByPalestra(atividade);
 
             mAdapter = new MinistracaoAdapter(getActivity(), mMinistracoes);
             setListAdapter(mAdapter);
 
-            String title = getString(R.string.title_activity_lista_ministracao)+" "+palestra.getNome();
+            String title = getString(R.string.title_activity_lista_ministracao)+" "+ atividade.getNome();
             getActivity().setTitle(title);
         }
 

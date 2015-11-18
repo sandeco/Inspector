@@ -1,7 +1,7 @@
 package com.inspector.persistencia.dao;
 
-import com.inspector.model.Palestra;
+import com.inspector.model.Atividade;
 
-public interface PalestraDAO extends GenericDAO<Palestra, Integer> {
+public interface PalestraDAO extends GenericDAO<Atividade, Integer> {
 
 }
