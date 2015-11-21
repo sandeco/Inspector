@@ -16,7 +16,7 @@ public class App extends Application {
     public App() {
         super();
 
-        this.singleton = this;
+        singleton = this;
     }
 
     public static Context getContext() {

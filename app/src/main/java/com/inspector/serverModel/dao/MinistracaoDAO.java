@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface MinistracaoDAO {
 
-	public List<Ministracao> listarMinistracoesDeHoje();
+	List<Ministracao> listarMinistracoesDeHoje();
 	
-	public List<Ministracao> listarMinistracoes();
+	List<Ministracao> listarMinistracoes();
 	
-	public boolean inserirMinistracao(Ministracao m);
+	boolean inserirMinistracao(Ministracao m);
 	
-	public boolean removerMinistracao(Ministracao m);
+	boolean removerMinistracao(Ministracao m);
 	
-	public Ministracao buscarMinistracaoPorId(int id);
+	Ministracao buscarMinistracaoPorId(int id);
 }

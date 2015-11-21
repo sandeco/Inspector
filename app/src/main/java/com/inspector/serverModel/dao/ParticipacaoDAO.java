@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface ParticipacaoDAO {
 
-	public List<Participacao> listarParticipacao();
+	List<Participacao> listarParticipacao();
 	
-	public boolean inserirParticipacao(Participacao participacao);
+	boolean inserirParticipacao(Participacao participacao);
 	
-	public boolean removerParticipacao(Participacao participacao);
+	boolean removerParticipacao(Participacao participacao);
 	
-	public boolean updateParticipacao(Participacao participacao);
+	boolean updateParticipacao(Participacao participacao);
 		
-	public Participacao buscarParticipacaoPorInscricaoMinistracao(int inscricao, Ministracao ministracao);
+	Participacao buscarParticipacaoPorInscricaoMinistracao(int inscricao, Ministracao ministracao);
 
 }

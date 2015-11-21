@@ -8,7 +8,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspector.communication.importData.ObjectRequest;
 import com.inspector.util.App;
@@ -43,7 +42,7 @@ public class ExportData {
         mapper = new ObjectMapper();
     }
 
-    public void export(final ObjectRequest request) throws IOException, VolleyError, JsonProcessingException {
+    public void export(final ObjectRequest request) throws IOException, VolleyError {
 
         final String json = mapper.writeValueAsString(request.getObjects());
 
