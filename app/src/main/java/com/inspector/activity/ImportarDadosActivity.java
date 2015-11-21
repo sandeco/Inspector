@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.inspector.R;
 import com.inspector.communication.importData.ProxyRest;
 import com.inspector.communication.importData.ProxySummary;
-import com.inspector.httpClient.InternetCheck;
+import com.inspector.communication.InternetCheck;
 
 public class ImportarDadosActivity extends AppCompatActivity implements ProxyRest.Listener, ProxySummary.ProxySummaryListener {
 

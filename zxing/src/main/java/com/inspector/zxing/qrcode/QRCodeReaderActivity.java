@@ -12,14 +12,10 @@ import jim.h.common.android.zxinglib.integrator.IntentResult;
 
 public class QRCodeReaderActivity extends Activity {
 
-    public final static int REQUEST_CODE = 122;
-    private Intent mIntent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mIntent = getIntent();
         initQrScan();
     }
 

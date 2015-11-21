@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Classe que irá fazer o backup dos dados a serem exportados em um arquivo texto.
@@ -34,7 +35,7 @@ public class BackupData {
         }
 
         if (success) {
-            String date = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
+            String date = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US).format(new Date());
 
             String nomeArquivo = "InspectorParticipacoes_"+ date + ".txt";
             File file = new File(folder, nomeArquivo);

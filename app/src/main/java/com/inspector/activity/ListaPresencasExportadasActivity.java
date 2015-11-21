@@ -1,72 +1,62 @@
 package com.inspector.activity;
 
-import android.app.ListActivity;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.SimpleAdapter;
 
-import com.google.gson.Gson;
-import com.inspector.serverModel.dao.MinistracaoDAOImpl;
-import com.inspector.serverModel.dao.ParticipacaoDAOImpl;
-import com.inspector.serverModel.Presenca;
+import com.inspector.R;
+import com.inspector.communication.modelcom.ParticipacaoCom;
+import com.inspector.model.Participacao;
+import com.inspector.persistencia.dao.ParticipacaoDAO;
+import com.inspector.persistencia.sqlite.ParticipacaoSqliteDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListaPresencasExportadasActivity extends ListActivity {
+public class ListaPresencasExportadasActivity extends AppCompatActivity {
 
-	private MinistracaoDAOImpl mDAO;
-	private ParticipacaoDAOImpl pDAO;
-	private String json;
-	private Gson gson;
+	private List<ParticipacaoCom> mParticipacoes;
+	private ParticipacaoDAO mParticipacaoDAO;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_fragment_layout);
 
-		mDAO = new MinistracaoDAOImpl(this);
-		pDAO = new ParticipacaoDAOImpl(this);
-		gson = new Gson();
+		ListFragment fragment = new ListFragment();
 
-		json = getIntent().getStringExtra(ExportarDadosActivity.JSON_EXPORTADO_EXTRA);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, fragment)
+				.commit();
 
-		if (json != null) {
-			
-			//Extraindo os dados do Json e do Banco de Dados
+		mParticipacaoDAO = new ParticipacaoSqliteDAO();
 
-			List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+		mParticipacoes = mParticipacaoDAO.listToExport();
 
-			Presenca[] presencas = gson.fromJson(json, Presenca[].class);
+		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
-			for (Presenca p : presencas) {
-
-				String nomePalestra = (mDAO.buscarPalestraPorId(p.getCod_atividade())).getNome();
-				String nomeParticipante="";
-
-				//String nomeParticipante = (pDAO.buscarParticipante(new Participante(p.getCod_participante(), null))).getNome();
+		for (Participacao participacao : mParticipacoes) {
 
 				Map<String, String> item = new HashMap<String, String>();
-				item.put("palestra nome", nomePalestra);
-				item.put("participante nome", nomeParticipante);
+				item.put("palestra nome", participacao.getMinistracao().getAtividade().getNome());
+				item.put("participante nome", participacao.getParticipante().getNome());
 				
 				data.add(item);
-			}
-
-			//Setando o adapter para a lista
-			
-			getListView().setAdapter(new SimpleAdapter(this,
-						data, 
-						android.R.layout.simple_list_item_2, 
-						new String[]{"palestra nome", "participante nome"}, 
-						new int[]{android.R.id.text2, android.R.id.text1}));
 		}
+
+		fragment.setListAdapter(new SimpleAdapter(this,
+					data,
+					android.R.layout.simple_list_item_2,
+					new String[]{"palestra nome", "participante nome"},
+					new int[]{android.R.id.text2, android.R.id.text1}));
 	}
 
 	@Override
 	protected void onDestroy() {
-		mDAO.close();
-		pDAO.close();
+		mParticipacaoDAO.close();
 		super.onDestroy();
 	}
 }

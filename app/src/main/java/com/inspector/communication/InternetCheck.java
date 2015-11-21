@@ -1,4 +1,4 @@
-package com.inspector.httpClient;
+package com.inspector.communication;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

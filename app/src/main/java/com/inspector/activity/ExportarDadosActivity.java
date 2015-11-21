@@ -17,8 +17,6 @@ import com.inspector.communication.exportData.ProxyExport;
 
 public class ExportarDadosActivity extends AppCompatActivity implements ProxyExport.Listener {
 
-	public static final String JSON_EXPORTADO_EXTRA = "com.inspector.json_exportado_extra";
-	
 	private ProgressBar progressBar;
 	private Button btExportar;
 	private TextView tvOutput;
@@ -34,6 +32,8 @@ public class ExportarDadosActivity extends AppCompatActivity implements ProxyExp
 		tvOutput = (TextView) findViewById(R.id.textOutput);
 		btListaPresencas = (Button) findViewById(R.id.bt_lista_presencas);
 
+		ativarPrimeiraTela();
+
 		btExportar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -43,8 +43,6 @@ public class ExportarDadosActivity extends AppCompatActivity implements ProxyExp
 				proxyExport.sync();
 			}
 		});
-
-		ativarPrimeiraTela();
 	}
 
 	private void ativarTelaCarregamento() {
@@ -70,7 +68,6 @@ public class ExportarDadosActivity extends AppCompatActivity implements ProxyExp
 
 	public void abrirListaPresencasExportadas(View v) {
 		Intent intent = new Intent(this, ListaPresencasExportadasActivity.class);
-//		intent.putExtra(JSON_EXPORTADO_EXTRA, json);
 		startActivity(intent);
 	}
 

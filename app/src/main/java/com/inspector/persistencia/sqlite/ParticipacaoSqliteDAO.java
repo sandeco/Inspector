@@ -39,6 +39,7 @@ public class ParticipacaoSqliteDAO extends GenericSqliteDAO<Participacao, Intege
 
         ministracaoDAO.close();
         participanteDAO.close();
+        cursor.close();
         return participacoes;
     }
 
